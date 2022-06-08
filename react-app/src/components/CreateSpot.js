@@ -38,11 +38,11 @@ const CreateSpot = () => {
   return (
     <div className="createSpotPage">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div>
+        {/* <div>
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
           ))}
-        </div>
+        </div> */}
         <div>
           <label>Image</label>
           <input
