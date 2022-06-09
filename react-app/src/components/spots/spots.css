@@ -33,3 +33,21 @@
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
+
+
+/* EDIT/DELETE SPOT */
+.editSpotPage {
+    margin-top: 100px;
+    display: flex;
+    height: 500px;
+    width: 500px;
+    border: 1px solid black;
+    flex-direction: column;
+}
+
+.deleteSpotButton {
+    border: 1px solid red;
+    padding: 5px;
+    width: fit-content;
+    cursor: pointer;
+}

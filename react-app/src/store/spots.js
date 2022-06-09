@@ -2,7 +2,14 @@
 const CREATE_SPOT = 'spots/CREATE_SPOT';
 const GET_SPOT = 'spots/GET_SPOT'
 const EDIT_SPOT = 'spots/EDIT_SPOT'
+const DELETE_SPOT = 'spots/DELETE_SPOT'
+const ALL_SPOTS = 'spots/ALL_SPOTS'
 
+
+const allSpots = (spots) => ({
+  type: ALL_SPOTS,
+  payload: spots
+})
 
 const newSpot = (spot) => ({
   type: CREATE_SPOT,
@@ -16,6 +23,11 @@ const getSpot = (spot) => ({
 
 const editSpot = (spot) => ({
   type: EDIT_SPOT,
+  payload: spot
+})
+
+const deleteSpot = (spot) => ({
+  type: DELETE_SPOT,
   payload: spot
 })
 
@@ -41,6 +53,19 @@ export const createSpot = (spot) => async (dispatch) => {
   } else {
     return ['An error occurred. Please try again.']
   }
+}
+
+export const fetchAllSpots = () => async (dispatch) => {
+  const response = await fetch(`/api/spots/`)
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(allSpots(data))
+    return data
+  } else {
+    return ['An error occurred. Please try again.']
+  }
+
 }
 
 export const fetchSpot = (spotId) => async (dispatch) => {
@@ -81,7 +106,26 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
   
   if (response.ok) {
     const data = await response.json();
-    dispatch(newSpot(data))
+    dispatch(editSpot(data))
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ['An error occurred. Please try again.']
+  }
+}
+
+export const removeSpot = (spotId) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${spotId}/delete`, {
+    method: 'DELETE'
+  })
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(deleteSpot(data))
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -101,6 +145,12 @@ export default function reducer(state = {}, action) {
       return {...state, spot: action.payload }
     case EDIT_SPOT:
       return {...state, spot: action.payload }
+    case DELETE_SPOT:
+      return {...state, spot: action.payload }
+    case ALL_SPOTS:
+      const newState = {...state}
+      newState['allSpots'] = action.payload
+      return newState
     default:
       return state;
   }
