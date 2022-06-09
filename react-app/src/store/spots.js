@@ -1,11 +1,23 @@
 // constants
 const CREATE_SPOT = 'spots/CREATE_SPOT';
+const GET_SPOT = 'spots/GET_SPOT'
+const EDIT_SPOT = 'spots/EDIT_SPOT'
 
 
 const newSpot = (spot) => ({
   type: CREATE_SPOT,
   payload: spot
 });
+
+const getSpot = (spot) => ({
+  type: GET_SPOT,
+  payload: spot
+})
+
+const editSpot = (spot) => ({
+  type: EDIT_SPOT,
+  payload: spot
+})
 
 
 export const createSpot = (spot) => async (dispatch) => {
@@ -20,7 +32,57 @@ export const createSpot = (spot) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(newSpot(data))
-    return null;
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ['An error occurred. Please try again.']
+  }
+}
+
+export const fetchSpot = (spotId) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${spotId}`, {
+    method: 'GET'
+  })
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getSpot(data))
+    return data
+  } else {
+    return ['An error occurred. Please try again.']
+  }
+}
+
+export const updateSpot = (spotId, spot) => async (dispatch) => {
+  const {image, address, city, state, country, name, description, beds, baths, price} = spot
+  const formData = new FormData()
+
+  formData.append('image', image)
+  formData.append('address', address)
+  formData.append('city', city)
+  formData.append('state', state)
+  formData.append('country', country)
+  formData.append('name', name)
+  formData.append('description', description)
+  formData.append('beds', beds)
+  formData.append('baths', baths)
+  formData.append('price', price)
+
+
+
+  const response = await fetch(`/api/spots/${spotId}/edit`, {
+    method: 'PUT',
+    body: formData
+  });
+  
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(newSpot(data))
+    return data;
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
@@ -34,7 +96,11 @@ export const createSpot = (spot) => async (dispatch) => {
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case CREATE_SPOT:
-      return { user: action.payload }
+      return {...state, spot: action.payload }
+    case GET_SPOT:
+      return {...state, spot: action.payload }
+    case EDIT_SPOT:
+      return {...state, spot: action.payload }
     default:
       return state;
   }
