@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createSpot } from "../store/spots";
+import { useHistory } from "react-router-dom";
+import { createSpot } from "../../store/spots";
+
 
 const CreateSpot = () => {
+  const history = useHistory()
   const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const [address, setAddress] = useState("");
@@ -14,6 +17,7 @@ const CreateSpot = () => {
   const [beds, setBeds] = useState(0);
   const [baths, setBaths] = useState(0);
   const [price, setPrice] = useState(0);
+  const [errors, setErrors] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,9 +33,12 @@ const CreateSpot = () => {
       baths: baths,
       price: price,
     };
-    const response = await dispatch(createSpot(spot));
+    const newSpot = await dispatch(createSpot(spot));
 
-    if (response.errors) {
+    if (newSpot.errors) {
+      setErrors(newSpot.errors)
+    } else {
+      history.push(`/spots/${newSpot.id}`)
     }
   };
 

@@ -5,6 +5,7 @@ import spots from './spots'
 
 const rootReducer = combineReducers({
   session,
+  spots
 });
 
 

@@ -1,3 +1,4 @@
+from crypt import methods
 from app.forms.new_spot_form import CreateSpotForm
 from flask import Blueprint, request
 from flask_login import login_required
@@ -61,3 +62,31 @@ def newSpot():
 
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@spot_routes.route('/<int:spotId>/edit', methods=['PUT'])
+@login_required
+def editSpot(spotId):
+    spot = Spot.query.get(spotId)
+
+    form = CreateSpotForm()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        spot.image = form.data['image'],
+        spot.address = form.data['address'],
+        spot.city = form.data['city'],
+        spot.state = form.data['state'],
+        spot.country = form.data['country'],
+        spot.name = form.data['name'],
+        spot.description = form.data['description'],
+        spot.beds = form.data['beds'],
+        spot.baths = form.data['baths'],
+        spot.price = form.data['price']
+
+        db.session.add(spot)
+        db.session.commit()
+        return spot.to_dict()
+
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    

@@ -1,0 +1,35 @@
+.singleSpotPage {
+    margin-top: 100px;
+    padding: 0% 20%;
+}
+
+
+
+
+/*CREATE SPOT PAGE CSS*/
+.createSpotPage {
+    margin-top: 100px;
+    display: flex;
+    height: 500px;
+    width: 500px;
+    border: 1px solid black;
+}
+
+.upperSpotPagebottom {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.editSpotButton {
+    width: fit-content;
+    padding: 5px;
+    border: .5px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.spotPicture {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
