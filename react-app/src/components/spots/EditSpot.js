@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { fetchSpot, updateSpot } from "../../store/spots";
+import { fetchSpot, removeSpot, updateSpot } from "../../store/spots";
 
 const EditSpot = () => {
   const spot = useSelector((state) => state?.spots?.spot);
@@ -51,9 +51,16 @@ const EditSpot = () => {
       history.push(`/spots/${newSpot.id}`);
     }
   };
-  if (isLoaded) {
+
+  const handleDeleteSpot = () => {
+    dispatch(removeSpot(spotId))
+    history.push('/')
+  }
+
+
+  // if (isLoaded) {
     return (
-      <div className="createSpotPage">
+      <div className="editSpotPage">
         <form onSubmit={(e) => handleSubmit(e)}>
           {/* <div>
             {errors.map((error, ind) => (
@@ -152,11 +159,12 @@ const EditSpot = () => {
           </div>
           <button>Host Spot</button>
         </form>
+        <div className="deleteSpotButton" onClick={handleDeleteSpot}>Delete</div>
       </div>
     );
-  } else {
-    return null
-  }
+  // } else {
+  //   return null
+  // }
 };
 
 export default EditSpot;

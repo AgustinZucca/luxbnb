@@ -11,6 +11,7 @@ import { authenticate } from './store/session';
 import CreateSpot from './components/spots/CreateSpot';
 import SingleSpot from './components/spots/SingleSpotPage';
 import EditSpot from './components/spots/EditSpot';
+import Feed from './components/Feed';
 
 
 function App() {
@@ -54,7 +55,7 @@ function App() {
           <EditSpot />
         </ProtectedRoute>
         <ProtectedRoute path='/' exact={true} >
-          <h1>My Home Page</h1>
+          <Feed />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

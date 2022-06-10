@@ -1,0 +1,35 @@
+.mainFeedPage {
+    margin-top: 100px;
+    display: flex;
+    padding: 0px 100px;
+    flex-wrap: wrap;
+}
+
+.spotFeedCard {
+    width: 300px;
+    height: 300px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.spotFeedImgContainer {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+}
+
+.spotFeedImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.spotFeedInfo {
+    margin-top: 10px;
+}
+
+.spotFeedInfoName {
+    margin: 5px 0px;
+}
