@@ -20,7 +20,7 @@ class Review(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'user': self.user.to_dict(),
-            'spot_id': self.spot_id,
+            'user_id': self.user_id,
             'review': self.review,
             'rating': self.rating,
             'created_at': self.created_at,
