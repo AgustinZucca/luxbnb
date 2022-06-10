@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "./auth/LogoutButton";
 import { menuIcon } from "./Navicons";
-import "./navbar.css";
+import "./css/navbar.css";
 
 const NavBar = () => {
   const user = useSelector((state) => state?.session?.user);

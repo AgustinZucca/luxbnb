@@ -63,6 +63,8 @@ def newSpot():
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+
+#EDIT SPOT
 @spot_routes.route('/<int:spotId>/edit', methods=['PUT'])
 @login_required
 def editSpot(spotId):
@@ -90,3 +92,14 @@ def editSpot(spotId):
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
     
+
+#Delete Spot
+@spot_routes.route('/<int:spotId>/delete', methods=['DELETE'])
+@login_required
+def deleteSpot(spotId):
+    spot = Spot.query.get(spotId)
+
+    db.session.delete(spot)
+    db.session.commit()
+
+    return 
