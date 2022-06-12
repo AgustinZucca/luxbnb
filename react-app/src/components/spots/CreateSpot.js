@@ -34,7 +34,6 @@ const CreateSpot = () => {
       price: price,
     };
     const newSpot = await dispatch(createSpot(spot));
-
     if (newSpot.errors) {
       setErrors(newSpot.errors)
     } else {
@@ -45,11 +44,11 @@ const CreateSpot = () => {
   return (
     <div className="createSpotPage">
       <form onSubmit={(e) => handleSubmit(e)}>
-        {/* <div>
+        <div>
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
           ))}
-        </div> */}
+        </div>
         <div>
           <label>Image</label>
           <input
@@ -119,6 +118,7 @@ const CreateSpot = () => {
             type="number"
             value={beds}
             required
+            min='0'
             onChange={(e) => setBeds(e.target.value)}
           />
         </div>
@@ -128,6 +128,7 @@ const CreateSpot = () => {
             type="number"
             value={baths}
             required
+            min='0'
             onChange={(e) => setBaths(e.target.value)}
           />
         </div>
@@ -137,6 +138,7 @@ const CreateSpot = () => {
             type="number"
             value={price}
             required
+            min='0'
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>

@@ -4,6 +4,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { fetchSpot } from "../../store/spots";
 import { Rating } from "react-simple-star-rating";
 import "./spots.css";
+import { createReview, deleteReview } from "../../store/reviews";
+import EditReview from "../EditReviewModal";
 
 const SingleSpot = () => {
   const history = useHistory();
@@ -12,23 +14,61 @@ const SingleSpot = () => {
   const spot = useSelector((state) => state.spots.spot);
   const { spotId } = useParams();
   const [rating, setRating] = useState(1);
+  const [review, setReview] = useState("");
+  const [count, setCount] = useState(0);
+  const [editing, setEditing] = useState(false);
+  const [currReview, setCurrReview] = useState({})
+
+  const ratingAvg = () => {};
 
   useEffect(async () => {
     dispatch(fetchSpot(spotId));
-  }, [dispatch]);
+  }, [count]);
 
   const editSpot = () => {
     history.push(`/spots/${spot?.id}/edit`);
   };
 
-  const createReview = () => {};
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    const fullReview = {
+      user_id: user.id,
+      spot_id: spot.id,
+      rating: rating,
+      review: review,
+    };
+    const newReview = await dispatch(createReview(fullReview));
+    setCount(count + 1);
+
+    return newReview;
+  };
+
+  const editReview = (review) => {
+    setCurrReview(review)
+    setEditing(true)
+  }
+
+  const removeReview = async (review) => {
+    const delt = dispatch(deleteReview(review.id)).then(() => setCount(count + 1))
+    return delt
+  }
 
   return (
+    <>
+    {editing && (
+      <EditReview currReview={currReview} hideModal={() => setEditing(false)} setCount={() => setCount(count+1)}/>
+    )}
     <div className="singleSpotPage">
       <div className="upperSpotPage">
         <h1 className="spotAd">{spot?.name}</h1>
         <div className="upperSpotPagebottom">
-          {spot?.address}
+          <div>
+            {spot?.address}, {spot?.city}, {spot?.state}
+            <div>
+              Avg. Rating{" "}
+              <Rating size={20} readonly={true} fillColor="#eb4c60" />
+            </div>
+          </div>
           {spot?.user_id == user?.id && (
             <div className="editSpotButton" onClick={editSpot}>
               Edit
@@ -55,7 +95,11 @@ const SingleSpot = () => {
           </div>
           <p style={{ fontSize: "20px" }}>Reviews</p>
           <div className="spotReviewsContainer">
-            <form onSubmit={createReview} className="newReviewForm">
+            {}
+            <form
+              onSubmit={(e) => handleReviewSubmit(e)}
+              className="newReviewForm"
+            >
               <div className="starRatingArea">
                 <div>Star Rating</div>
                 <Rating
@@ -70,17 +114,49 @@ const SingleSpot = () => {
               <textarea
                 className="reviewInput"
                 placeholder="Leave your review of this spot"
+                onChange={(e) => setReview(e.target.value)}
               />
-              <button>Submit</button>
+              <button className="newReviewSubmit">Submit</button>
             </form>
-            {spot?.reviews?.map((review, idx) => (
-              <>{review}</>
-            ))}
+            {spot?.reviews
+              .slice(0)
+              .reverse()
+              .map((review, idx) => (
+                <div className="createdReviews">
+                  <div className="reviewContainer">
+                    {review.user.username}
+                    <div className="userReview">{review.review}</div>
+                  </div>
+                  <div>
+                    <Rating
+                      className="reviewStars"
+                      size={20}
+                      readonly={true}
+                      fillColor="#eb4c60"
+                      ratingValue={review.rating}
+                    />
+                    {review.user.id === user?.id && (
+                      <div className="reviewsButtons">
+                        <div
+                          className="editReviewButton"
+                          onClick={() => editReview(review)}
+                        >
+                          Edit
+                        </div>
+                        <div className="deleteReviewButton"
+                        onClick={() => removeReview(review)}
+                        >Delete</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
         <div className="lowerRightSpotPage"></div>
       </div>
     </div>
+    </>
   );
 };
 

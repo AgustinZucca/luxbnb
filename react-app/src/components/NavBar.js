@@ -53,6 +53,9 @@ const NavBar = () => {
                   >
                     New Spot
                   </NavLink>
+                  <NavLink
+                    to={`/users/${user.id}`}
+                    >Profile</NavLink>
 
                   <LogoutButton />
                 </>
