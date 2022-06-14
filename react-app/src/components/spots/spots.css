@@ -1,5 +1,5 @@
 .singleSpotPage {
-  margin-top: 100px;
+  margin: 100px 0px;
   padding: 0% 20%;
 }
 
@@ -30,8 +30,8 @@
 }
 
 .hostUsername {
-    font-size: 25px;
-    margin: 0;
+  font-size: 25px;
+  margin: 0;
 }
 .spotDescription {
   border-bottom: 0.5px solid black;
@@ -40,13 +40,77 @@
 }
 
 .spotReviewsContainer {
-    padding: 00px 0px;
+  padding: 00px 0px;
 }
 
 .newReviewForm {
-    width: 100%;
-    margin: 10px 0px;
-    display: flex;
+  width: 100%;
+  margin: 10px 0px;
+  display: flex;
+  align-items: center;
+}
+
+.editReviewModal {
+  width: 100vw;
+  height: 100%;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.637);
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editReviewFormBkg {
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}
+
+.editReviewForm {
+  position: absolute;
+  z-index: 55;
+  padding: 10px;
+  background-color: rgb(244, 244, 244);
+  border-radius: 10px;
+  display: flex;
+  width: 600px;
+  align-items: center;
+  animation: popup 0.3s;
+}
+
+@keyframes popup {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.newReviewSubmit {
+  border: 0;
+  background-color: #eb4c60;
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.editReviewSubmit {
+  border: 0;
+  background-color: #eb4c60;
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }
 
 .starRatingArea {
@@ -57,26 +121,71 @@
 }
 
 .reviewInput {
-    width: 80%;
-    height: 50px;
-    resize: none;
-    font-size: 15px;
+  width: 80%;
+  height: 50px;
+  resize: none;
+  font-size: 15px;
 }
 
+.reviewContainer {
+  width: 80%;
+}
+
+.userReview {
+  padding: 5px 0px;
+  overflow-wrap: break-word;
+}
+
+.createdReviews {
+  display: flex;
+  padding: 5px 0px;
+  justify-content: space-between;
+  border-bottom: 0.5px solid black;
+}
+
+.reviewsButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editReviewButton {
+  border: 0.5px solid rgba(0, 0, 0, 0.349);
+  padding: 3px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deleteReviewButton {
+  border: 0.5px solid rgba(0, 0, 0, 0.34);
+  padding: 3px;
+  border-radius: 5px;
+  color: red;
+  cursor: pointer;
+}
 
 /*CREATE SPOT PAGE CSS*/
 .createSpotPage {
-  margin-top: 100px;
+padding-top: 100px;
   display: flex;
-  height: 500px;
-  width: 500px;
-  border: 1px solid black;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  justify-content: center;
+}
+
+.createSpotForm {
+  width: 600px;
+  height: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.392);
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .upperSpotPagebottom {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .editSpotButton {
@@ -90,6 +199,41 @@
 .spotPicture {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+}
+
+.labelInputContainer {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0px;
+}
+
+.hostSpotButton {
+  border: 0;
+  background-color: #eb4c60;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.spotDescriptionInput {
+  resize: none;
+  width: 200px;
+  height: 150px;
+}
+
+.newSpotInputs {
+  width: 200px;
+}
+.newSpotInputState {
+  width: 207px;
+}
+
+.spotImgPreview {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  border: 1px solid black;
 }
 
 /* EDIT/DELETE SPOT */
