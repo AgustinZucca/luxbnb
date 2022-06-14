@@ -18,14 +18,14 @@ const Feed = () => {
         <div key={idx}>
           <div className="spotFeedCard" onClick={() => history.push(`/spots/${spot.id}`)}>
             <div className="spotFeedImgContainer">
-              <img className="spotFeedImg" src={spot.image}></img>
+              <img className="spotFeedImg" src={spot.images[0]}></img>
             </div>
             <div className="spotFeedInfo">
               <div>
                 {spot.city}, {spot.state}
               </div>
               <div>
-                  <h3 className="spotFeedInfoName">{spot.name}</h3>
+                  <div className="spotFeedInfoName">{spot.name}</div>
               </div>
               <div>
                   ${spot.price} /Night

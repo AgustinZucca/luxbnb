@@ -24,7 +24,7 @@
 
 .navbarcomponents {
     display: flex;
-    padding: 15px 50px;
+    padding: 15px 150px;
     justify-content: space-between;
     align-items: center;
 }
@@ -38,4 +38,19 @@
     width: 100px;
     height: 100px;
     border: 1px solid black;
+}
+
+.navbarLinks {
+    text-decoration: none;
+    color: #eb4c60;
+}
+
+.logo {
+    width: 40px;
+
+}
+
+.homeLinks {
+    display: flex;
+    align-items: center;
 }
