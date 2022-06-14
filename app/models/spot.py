@@ -6,11 +6,9 @@ class Spot(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    image = db.Column(db.String, nullable=False)
     address = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
     state = db.Column(db.String(255), default='')
-    country = db.Column(db.String(255), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     beds = db.Column(db.Integer, nullable=False)
@@ -30,11 +28,9 @@ class Spot(db.Model):
             'user': self.user.to_dict(),
             'reviews': [review.to_dict() for review in self.reviews],
             'images': [image.image_info() for image in self.images],
-            'image': self.image,
             'address': self.address,
             'city': self.city,
             'state': self.state,
-            'country': self.country,
             'name': self.name,
             'description': self.description,
             'beds': self.beds,

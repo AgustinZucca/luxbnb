@@ -25,7 +25,7 @@ const Feed = () => {
                 {spot.city}, {spot.state}
               </div>
               <div>
-                  <h3 className="spotFeedInfoName">{spot.name}</h3>
+                  <div className="spotFeedInfoName">{spot.name}</div>
               </div>
               <div>
                   ${spot.price} /Night

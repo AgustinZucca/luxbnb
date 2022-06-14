@@ -1,5 +1,5 @@
 .singleSpotPage {
-  margin-top: 100px;
+  margin: 100px 0px;
   padding: 0% 20%;
 }
 
@@ -167,9 +167,18 @@
 .createSpotPage {
   margin-top: 100px;
   display: flex;
-  height: 500px;
-  width: 500px;
-  border: 1px solid black;
+  height: 80vh;
+  width: 100vw;
+  overflow-x: hidden;
+  justify-content: center;
+}
+
+.createSpotForm {
+  width: 600px;
+  height: 600px;
+  border: 1px solid rgba(0, 0, 0, 0.392);
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .upperSpotPagebottom {
@@ -191,6 +200,35 @@
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
+
+.labelInputContainer {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0px;
+}
+
+.hostSpotButton {
+  border: 0;
+  background-color: #eb4c60;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.spotDescriptionInput {
+  resize: none;
+  width: 200px;
+  height: 150px;
+}
+
+.newSpotInputs {
+  width: 200px;
+}
+.newSpotInputState {
+  width: 207px;
+}
+
 
 /* EDIT/DELETE SPOT */
 .editSpotPage {

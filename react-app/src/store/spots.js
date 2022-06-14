@@ -82,15 +82,28 @@ export const fetchSpot = (spotId) => async (dispatch) => {
   }
 }
 
+export const uploadFile = (fileForm) => async (dispatch) => {
+  const { spot_id, file, newFile } = fileForm;
+
+  const form = new FormData();
+  form.append("file", file);
+  form.append("spot_id", spot_id);
+  form.append("newFile", newFile);
+
+  const res = await fetch("/api/spots/images", {
+    method: "POST",
+    body: form,
+  });
+};
+
 export const updateSpot = (spotId, spot) => async (dispatch) => {
-  const {image, address, city, state, country, name, description, beds, baths, price} = spot
+  const {image, address, city, state, name, description, beds, baths, price} = spot
   const formData = new FormData()
 
   formData.append('image', image)
   formData.append('address', address)
   formData.append('city', city)
   formData.append('state', state)
-  formData.append('country', country)
   formData.append('name', name)
   formData.append('description', description)
   formData.append('beds', beds)
