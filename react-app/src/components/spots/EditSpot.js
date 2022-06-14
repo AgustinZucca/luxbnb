@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { fetchSpot, removeSpot, updateSpot } from "../../store/spots";
+import { fetchSpot, removeSpot, updateSpot, uploadFile } from "../../store/spots";
 
 const EditSpot = () => {
   const spot = useSelector((state) => state?.spots?.spot);
@@ -19,6 +19,19 @@ const EditSpot = () => {
   const [errors, setErrors] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const { spotId } = useParams();
+  const [imgUrl, setImgUrl] = useState(spot?.images[0]);
+  const [previewUrl, setPreviewUrl] = useState(spot?.images[0]);
+  const [oldImg, setOldImg] = useState(imgUrl);
+
+  const updateImage = async (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      setPreviewUrl(reader.result);
+    };
+    setImgUrl(file);
+  };
 
   useEffect(async () => {
     dispatch(fetchSpot(spotId));
@@ -41,7 +54,9 @@ const EditSpot = () => {
       price: price,
     };
     const newSpot = await dispatch(updateSpot(spotId, spot));
-
+    if (imgUrl !== oldImg) {
+      const imageUpload = await dispatch(uploadFile(imgUrl, newSpot.id));
+    }
     if (newSpot.errors) {
       setErrors(newSpot.errors);
     } else {
@@ -50,14 +65,13 @@ const EditSpot = () => {
   };
 
   const handleDeleteSpot = () => {
-    dispatch(removeSpot(spotId))
-    history.push('/')
-  }
-
+    dispatch(removeSpot(spotId));
+    history.push("/");
+  };
 
   // if (isLoaded) {
-    return (
-      <div className="createSpotPage">
+  return (
+    <div className="createSpotPage">
       <form onSubmit={(e) => handleSubmit(e)} className="createSpotForm">
         <h2>Host a Spot on LuxBnB</h2>
         <div>
@@ -65,16 +79,16 @@ const EditSpot = () => {
             <div key={ind}>{error}</div>
           ))}
         </div>
-        <div className="labelInputContainer">
+        <div>
           <label>Image</label>
           <input
-            type="text"
-            placeholder="Image Url"
-            value={image}
-            required
-            onChange={(e) => setImage(e.target.value)}
-          />
+            type="file"
+            name="img_url"
+            accept=".jpg, .jpeg, .png"
+            onChange={updateImage}
+          ></input>
         </div>
+        {previewUrl && <img src={previewUrl} className="spotImgPreview"></img>}
         <div className="labelInputContainer">
           <label>Address</label>
           <input
@@ -98,7 +112,7 @@ const EditSpot = () => {
         <div className="labelInputContainer">
           <label>State</label>
           <select
-          className="newSpotInputState"
+            className="newSpotInputState"
             form="new_spot_form"
             type="select"
             value={state}

@@ -89,7 +89,7 @@ const SingleSpot = () => {
         </div>
       </div>
       <div className="spotPicturesContainer">
-        <img className="spotPicture" src={spot?.image}></img>
+        <img className="spotPicture" src={spot?.images[spot?.images.length - 1]}></img>
       </div>
       <div className="lowerSpotPage">
         <div className="lowerLeftSpotPage">
@@ -134,7 +134,7 @@ const SingleSpot = () => {
               .slice(0)
               .reverse()
               .map((review, idx) => (
-                <div className="createdReviews">
+                <div className="createdReviews" key={idx}>
                   <div className="reviewContainer">
                     {review.user.username}
                     <div className="userReview">{review.review}</div>

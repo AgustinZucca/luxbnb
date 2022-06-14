@@ -1,125 +1,124 @@
 // constants
-const CREATE_SPOT = 'spots/CREATE_SPOT';
-const GET_SPOT = 'spots/GET_SPOT'
-const EDIT_SPOT = 'spots/EDIT_SPOT'
-const DELETE_SPOT = 'spots/DELETE_SPOT'
-const ALL_SPOTS = 'spots/ALL_SPOTS'
-
+const CREATE_SPOT = "spots/CREATE_SPOT";
+const GET_SPOT = "spots/GET_SPOT";
+const EDIT_SPOT = "spots/EDIT_SPOT";
+const DELETE_SPOT = "spots/DELETE_SPOT";
+const ALL_SPOTS = "spots/ALL_SPOTS";
 
 const allSpots = (spots) => ({
   type: ALL_SPOTS,
-  payload: spots
-})
+  payload: spots,
+});
 
 const newSpot = (spot) => ({
   type: CREATE_SPOT,
-  payload: spot
+  payload: spot,
 });
 
 const getSpot = (spot) => ({
   type: GET_SPOT,
-  payload: spot
-})
+  payload: spot,
+});
 
 const editSpot = (spot) => ({
   type: EDIT_SPOT,
-  payload: spot
-})
+  payload: spot,
+});
 
 const deleteSpot = (spot) => ({
   type: DELETE_SPOT,
-  payload: spot
-})
-
+  payload: spot,
+});
 
 export const createSpot = (spot) => async (dispatch) => {
-  const response = await fetch('/api/spots/new', {
-    method: 'POST',
+  const response = await fetch("/api/spots/new", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(spot),
   });
-  
+
   if (response.ok) {
     const data = await response.json();
-    dispatch(newSpot(data))
+    dispatch(newSpot(data));
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
-      return data
+      return data;
     }
   } else {
-    return ['An error occurred. Please try again.']
+    return ["An error occurred. Please try again."];
   }
-}
+};
 
 export const fetchAllSpots = () => async (dispatch) => {
-  const response = await fetch(`/api/spots/`)
+  const response = await fetch(`/api/spots/`);
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(allSpots(data))
-    return data
+    dispatch(allSpots(data));
+    return data;
   } else {
-    return ['An error occurred. Please try again.']
+    return ["An error occurred. Please try again."];
   }
-
-}
+};
 
 export const fetchSpot = (spotId) => async (dispatch) => {
   const response = await fetch(`/api/spots/${spotId}`, {
-    method: 'GET'
-  })
+    method: "GET",
+  });
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(getSpot(data))
-    return data
+    dispatch(getSpot(data));
+    return data;
   } else {
-    return ['An error occurred. Please try again.']
+    return ["An error occurred. Please try again."];
   }
-}
+};
 
-export const uploadFile = (fileForm) => async (dispatch) => {
-  const { spot_id, file, newFile } = fileForm;
+export const uploadFile = (img_url, spotId) => async (dispatch) => {
 
   const form = new FormData();
-  form.append("file", file);
-  form.append("spot_id", spot_id);
-  form.append("newFile", newFile);
+  form.append("img_url", img_url);
 
-  const res = await fetch("/api/spots/images", {
+  const res = await fetch(`/api/spots/images/${spotId}`, {
     method: "POST",
     body: form,
   });
+
+  if (res.ok) {
+    const data = await res.json();
+    return data;
+  } else {
+    return ["An error occurred. Please try again."];
+  }
 };
 
 export const updateSpot = (spotId, spot) => async (dispatch) => {
-  const {image, address, city, state, name, description, beds, baths, price} = spot
-  const formData = new FormData()
+  const { address, city, state, name, description, beds, baths, price } =
+    spot;
+  const formData = new FormData();
 
-  formData.append('image', image)
-  formData.append('address', address)
-  formData.append('city', city)
-  formData.append('state', state)
-  formData.append('name', name)
-  formData.append('description', description)
-  formData.append('beds', beds)
-  formData.append('baths', baths)
-  formData.append('price', price)
-
-
+  formData.append("address", address);
+  formData.append("city", city);
+  formData.append("state", state);
+  formData.append("name", name);
+  formData.append("description", description);
+  formData.append("beds", beds);
+  formData.append("baths", baths);
+  formData.append("price", price);
 
   const response = await fetch(`/api/spots/${spotId}/edit`, {
-    method: 'PUT',
-    body: formData
+    method: "PUT",
+    body: formData,
   });
-  
+
   if (response.ok) {
     const data = await response.json();
-    dispatch(editSpot(data))
+    dispatch(editSpot(data));
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -127,18 +126,18 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
       return data.errors;
     }
   } else {
-    return ['An error occurred. Please try again.']
+    return ["An error occurred. Please try again."];
   }
-}
+};
 
 export const removeSpot = (spotId) => async (dispatch) => {
   const response = await fetch(`/api/spots/${spotId}/delete`, {
-    method: 'DELETE'
-  })
+    method: "DELETE",
+  });
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(deleteSpot(data))
+    dispatch(deleteSpot(data));
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -146,24 +145,24 @@ export const removeSpot = (spotId) => async (dispatch) => {
       return data.errors;
     }
   } else {
-    return ['An error occurred. Please try again.']
+    return ["An error occurred. Please try again."];
   }
-}
+};
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case CREATE_SPOT:
-      return {...state, spot: action.payload }
+      return { ...state, spot: action.payload };
     case GET_SPOT:
-      return {...state, spot: action.payload }
+      return { ...state, spot: action.payload };
     case EDIT_SPOT:
-      return {...state, spot: action.payload }
+      return { ...state, spot: action.payload };
     case DELETE_SPOT:
-      return {...state, spot: action.payload }
+      return { ...state, spot: action.payload };
     case ALL_SPOTS:
-      const newState = {...state}
-      newState['allSpots'] = action.payload
-      return newState
+      const newState = { ...state };
+      newState["allSpots"] = action.payload;
+      return newState;
     default:
       return state;
   }

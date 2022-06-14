@@ -165,9 +165,9 @@
 
 /*CREATE SPOT PAGE CSS*/
 .createSpotPage {
-  margin-top: 100px;
+padding-top: 100px;
   display: flex;
-  height: 80vh;
+  height: 100vh;
   width: 100vw;
   overflow-x: hidden;
   justify-content: center;
@@ -175,7 +175,7 @@
 
 .createSpotForm {
   width: 600px;
-  height: 600px;
+  height: fit-content;
   border: 1px solid rgba(0, 0, 0, 0.392);
   border-radius: 10px;
   padding: 20px;
@@ -229,6 +229,12 @@
   width: 207px;
 }
 
+.spotImgPreview {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  border: 1px solid black;
+}
 
 /* EDIT/DELETE SPOT */
 .editSpotPage {

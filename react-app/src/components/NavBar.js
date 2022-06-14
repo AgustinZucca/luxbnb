@@ -31,7 +31,7 @@ const NavBar = () => {
           className={"navbarLinks"}
         >
           <div className="homeLinks">
-            <img src="Luxbnb_Logo-removebg-preview.png" className="logo"></img>
+            <img src="/Luxbnb_Logo-removebg-preview.png" className="logo"></img>
             <div>luxbnb</div>
           </div>
         </NavLink>

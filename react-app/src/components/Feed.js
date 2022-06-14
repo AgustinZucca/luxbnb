@@ -18,7 +18,7 @@ const Feed = () => {
         <div key={idx}>
           <div className="spotFeedCard" onClick={() => history.push(`/spots/${spot.id}`)}>
             <div className="spotFeedImgContainer">
-              <img className="spotFeedImg" src={spot.image}></img>
+              <img className="spotFeedImg" src={spot.images[0]}></img>
             </div>
             <div className="spotFeedInfo">
               <div>

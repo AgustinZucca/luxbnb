@@ -1,26 +1,36 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSpot } from "../../store/spots";
+import { createSpot, uploadFile } from "../../store/spots";
 
 const CreateSpot = () => {
-  const user = useSelector(state => state.session.user)
+  const user = useSelector((state) => state.session.user);
   const history = useHistory();
   const dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  const [state, setState] = useState('Alabama');
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [beds, setBeds] = useState(0);
   const [baths, setBaths] = useState(0);
   const [price, setPrice] = useState(0);
-  const [img1, setImg1] = useState('')
   const [errors, setErrors] = useState([]);
+  const [imgUrl, setImgUrl] = useState();
+  const [previewUrl, setPreviewUrl] = useState(false);
+
+  const updateImage = async (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      setPreviewUrl(reader.result);
+    };
+    setImgUrl(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     const spot = {
       address: address,
@@ -31,9 +41,11 @@ const CreateSpot = () => {
       beds: beds,
       baths: baths,
       price: price,
-      userId: user.id
+      userId: user.id,
     };
     const newSpot = await dispatch(createSpot(spot));
+    console.log(imgUrl, newSpot.id)
+    const imageUpload = await dispatch(uploadFile(imgUrl, newSpot.id))
     if (newSpot.errors) {
       setErrors(newSpot.errors);
     } else {
@@ -50,6 +62,17 @@ const CreateSpot = () => {
             <div key={ind}>{error}</div>
           ))}
         </div>
+        <div>
+          <label>Image</label>
+          <input
+            type="file"
+            name="img_url"
+            accept=".jpg, .jpeg, .png"
+            onChange={updateImage}
+            required
+          ></input>
+        </div>
+        {previewUrl && <img src={previewUrl} className='spotImgPreview'></img>}
         {/* <div className="labelInputContainer">
           <label>Image</label>
           <input
@@ -83,13 +106,12 @@ const CreateSpot = () => {
         <div className="labelInputContainer">
           <label>State</label>
           <select
-          className="newSpotInputState"
-            form="new_spot_form"
+            className="newSpotInputState"
             type="select"
             value={state}
             onChange={(e) => setState(e.target.value)}
           >
-            <option value="Alabama">Alabama</option>
+            <option value="Alabama" selected>Alabama</option>
             <option value="Alaska">Alaska</option>
             <option value="Arizona">Arizona</option>
             <option value="Arkansas">Arkansas</option>
