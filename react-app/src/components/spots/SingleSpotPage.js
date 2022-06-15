@@ -7,7 +7,7 @@ import "./spots.css";
 import './calendar.css'
 import { createReview, deleteReview } from "../../store/reviews";
 import EditReview from "../EditReviewModal";
-import { addNewBookingThunk } from "../../store/bookings";
+import { addNewBooking } from "../../store/bookings";
 import DatePicker from "react-calendar";
 
 
@@ -27,7 +27,7 @@ const SingleSpot = () => {
   const [avgRating, setAvgRating] = useState();
   const [showSuccess, setSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
-  console.log(date);
+
   const ratingAvg = () => {
     let total = 0;
     let times = 0;
@@ -59,7 +59,8 @@ const SingleSpot = () => {
     };
     const newReview = await dispatch(createReview(fullReview));
     setCount(count + 1);
-
+    setRating(0)
+    setReview('')
     return newReview;
   };
 
@@ -72,9 +73,8 @@ const SingleSpot = () => {
       const checkInDate = date[0].toISOString().split("T")[0];
 
       const checkOutDate = date[1].toISOString().split("T")[0];
-
       const data = await dispatch(
-        addNewBookingThunk(user.id, spotId, checkInDate, checkOutDate)
+        addNewBooking(user.id, spotId, checkInDate, checkOutDate)
       );
 
       setSuccess(true);
@@ -238,15 +238,15 @@ const SingleSpot = () => {
                     <>
                       <div>
                         Check In Date:{" "}
-                        {date ? date[0].toISOString().split("T")[0] : ""}
+                        {date[0].toISOString().split("T")[0]}
                       </div>
                       <div>
                         Check Out Date:{" "}
-                        {date ? date[1].toISOString().split("T")[0] : ""}
+                        {date[1].toISOString().split("T")[0]}
                       </div>
                       <div>
                         Total before taxes: $
-                        {date ? bookingTotal(date[0], date[1]) : ""}
+                        {bookingTotal(date[0], date[1])}
                       </div>
                     </>
                   )}

@@ -57,6 +57,9 @@ function App() {
         <ProtectedRoute path='/' exact={true} >
           <Feed />
         </ProtectedRoute>
+        <ProtectedRoute path='/users/:userId/bookings' exact={true} >
+          <Feed />
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );

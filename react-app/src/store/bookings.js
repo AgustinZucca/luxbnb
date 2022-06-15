@@ -18,18 +18,18 @@ const deleteBooking = (bookingId) => ({
   bookingId: bookingId,
 });
 
-export const loadUserBookingsThunk = (userId) => async (dispatch) => {
-  const res = await fetch(`/api/bookings/user/${userId}`);
+export const loadUserBookings = (userId) => async (dispatch) => {
+  const response = await fetch(`/api/bookings/user/${userId}`);
 
-  if (res.ok) {
-    const bookings = await res.json();
+  if (response.ok) {
+    const bookings = await response.json();
     dispatch(loadBookings(bookings));
   }
 };
 
-export const addNewBookingThunk =
+export const addNewBooking =
   (user_id, spot_id, check_in, check_out) => async (dispatch) => {
-    const res = await fetch(`/api/bookings/`, {
+    const response = await fetch(`/api/bookings/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,21 +42,21 @@ export const addNewBookingThunk =
       }),
     });
 
-    if (res.ok) {
-      const bookingInfo = await res.json();
+    if (response.ok) {
+      const bookingInfo = await response.json();
       dispatch(createBooking(bookingInfo));
-      return ["Created", bookingInfo];
+      return bookingInfo;
     }
   };
 
 
-export const deleteBookingThunk = (booking_id) => async (dispatch) => {
-    const res = await fetch(`/api/bookings/${booking_id}`, {
+export const removeBooking = (booking_id) => async (dispatch) => {
+    const response = await fetch(`/api/bookings/${booking_id}`, {
       method: "DELETE",
       body: JSON.stringify({ booking_id }),
     });
   
-    if (res.ok) {
+    if (response.ok) {
       dispatch(deleteBooking(booking_id));
     }
   };

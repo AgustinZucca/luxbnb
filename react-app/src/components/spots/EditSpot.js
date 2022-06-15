@@ -27,7 +27,7 @@ const EditSpot = () => {
   const [imgUrl, setImgUrl] = useState(spot?.images[0]);
   const [previewUrl, setPreviewUrl] = useState(spot?.images[0]);
   const [oldImg, setOldImg] = useState(imgUrl);
-
+  console.log(spotId)
   const updateImage = async (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -69,8 +69,8 @@ const EditSpot = () => {
     }
   };
 
-  const handleDeleteSpot = () => {
-    dispatch(removeSpot(spotId));
+  const handleDeleteSpot = async () => {
+    await dispatch(removeSpot(spotId));
     history.push("/");
   };
 

@@ -98,6 +98,7 @@ def editSpot(spotId):
 @spot_routes.route('/<int:spotId>/delete', methods=['DELETE'])
 @login_required
 def deleteSpot(spotId):
+    print('INSIDE OF DELETE SPOT ROUTE \n\n')
     spot = Spot.query.get(spotId)
 
     db.session.delete(spot)

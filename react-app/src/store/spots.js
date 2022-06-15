@@ -134,7 +134,6 @@ export const removeSpot = (spotId) => async (dispatch) => {
   const response = await fetch(`/api/spots/${spotId}/delete`, {
     method: "DELETE",
   });
-
   if (response.ok) {
     const data = await response.json();
     dispatch(deleteSpot(data));
