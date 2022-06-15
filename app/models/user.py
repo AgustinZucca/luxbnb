@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
 
     spots = db.relationship('Spot',back_populates = 'user')
     reviews = db.relationship('Review', back_populates = 'user')
+    bookings = db.relationship("Booking", back_populates="user")
 
 
     @property

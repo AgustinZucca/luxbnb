@@ -1,6 +1,6 @@
 .singleSpotPage {
   margin: 100px 0px;
-  padding: 0% 20%;
+  padding: 0% 15%;
 }
 
 .spotPicturesContainer {
@@ -9,7 +9,7 @@
 }
 
 .spotPicture {
-  width: 70%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
 }
@@ -18,10 +18,25 @@
   margin-top: 20px;
   width: 100%;
   height: fit-content;
+  display: flex;
+  justify-content: space-between;
 }
 
 .lowerLeftSpotPage {
-  width: 70%;
+  width: 65%;
+}
+
+.lowerRightSpotPage {
+  width: 30%;
+}
+
+.pricePerNight {
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
+.calendar {
+  border: 0;
 }
 
 .hostInfo {
@@ -163,6 +178,12 @@
   cursor: pointer;
 }
 
+.booking_container {
+  border: .5px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 /*CREATE SPOT PAGE CSS*/
 .createSpotPage {
 padding-top: 100px;
@@ -186,6 +207,10 @@ padding-top: 100px;
   width: 100%;
   justify-content: space-between;
   align-items: center;
+}
+
+.avgRating {
+  z-index: -1;
 }
 
 .editSpotButton {
@@ -252,3 +277,5 @@ padding-top: 100px;
   width: fit-content;
   cursor: pointer;
 }
+
+

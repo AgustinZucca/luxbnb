@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { fetchSpot, removeSpot, updateSpot, uploadFile } from "../../store/spots";
+import {
+  fetchSpot,
+  removeSpot,
+  updateSpot,
+  uploadFile,
+} from "../../store/spots";
 
 const EditSpot = () => {
   const spot = useSelector((state) => state?.spots?.spot);
@@ -227,7 +232,10 @@ const EditSpot = () => {
             />
           </div>
         </div>
-        <button className="hostSpotButton">Host Spot</button>
+        <div>
+          <button className="hostSpotButton">Host Spot</button>
+          <div onClick={handleDeleteSpot}>Delete</div>
+        </div>
       </form>
     </div>
   );

@@ -2,3 +2,7 @@
 * {
     font-family: 'Montserrat', sans-serif;
 }
+
+abbr[title] {
+    text-decoration: none;
+}
