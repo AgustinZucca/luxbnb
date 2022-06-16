@@ -8,28 +8,43 @@ const Feed = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const spots = useSelector((state) => state?.spots?.allSpots?.spots);
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(async () => {
-    dispatch(fetchAllSpots());
-  }, [dispatch]);
+    await dispatch(fetchAllSpots());
+    setIsLoaded(true);
+  }, []);
+
+  if (!isLoaded) {
+    return (
+      <div className="loadingPage">
+      <div><h1 className="loadingMessage">Loading Available Spots</h1></div>
+        <img src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"></img>
+      </div>
+    );
+  }
 
   return (
     <div className="mainFeedPage">
       {spots?.map((spot, idx) => (
         <div key={idx}>
-          <div className="spotFeedCard" onClick={() => history.push(`/spots/${spot.id}`)}>
+          <div
+            className="spotFeedCard"
+            onClick={() => history.push(`/spots/${spot.id}`)}
+          >
             <div className="spotFeedImgContainer">
-              <img className="spotFeedImg" src={spot.images[0]}></img>
+              <img
+                className="spotFeedImg"
+                src={spot?.images[spot?.images.length - 1]?.url}
+              ></img>
             </div>
             <div className="spotFeedInfo">
               <div>
                 {spot.city}, {spot.state}
               </div>
               <div>
-                  <div className="spotFeedInfoName">{spot.name}</div>
+                <div className="spotFeedInfoName">{spot.name}</div>
               </div>
-              <div>
-                  ${spot.price} /Night
-              </div>
+              <div>${spot.price} /Night</div>
             </div>
           </div>
         </div>

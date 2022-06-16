@@ -1,25 +1,37 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "./auth/LogoutButton";
 import { menuIcon } from "./Navicons";
 import "./css/navbar.css";
+import { fetchAllSpots } from "../store/spots";
+
 
 const NavBar = () => {
+  const dispatch = useDispatch()
   const user = useSelector((state) => state?.session?.user);
   const [showDropDown, setShowDropDown] = useState(false);
 
   const openDropDown = () => {
     setShowDropDown(!showDropDown);
+    // const closeModal = () => {
+    //   setShowDropDown(false);
+    // };
 
-    const closeModal = () => {
-      setShowDropDown(false);
-    };
-    if (showDropDown === true) {
-      document.addEventListener("click", closeModal);
-    }
-    return document.removeEventListener("click", closeModal);
+    // document.addEventListener("click", closeModal);
+
+    // return document.removeEventListener("click", closeModal);
   };
+
+  const closeModal = () => {
+    setShowDropDown(false);
+  };
+
+  useEffect(() => {
+    (async() => {
+      await dispatch(fetchAllSpots());
+    })();
+  }, [dispatch]);
 
   return (
     <nav className="navbar">
@@ -39,46 +51,52 @@ const NavBar = () => {
           {menuIcon}
 
           {showDropDown && (
-            <div className="menudropdown">
-              {!user && (
-                <>
-                  <NavLink
-                    to="/login"
-                    exact={true}
-                    activeClassName="active"
-                    className={"navbarLinks"}
-                  >
-                    Login
-                  </NavLink>
+            <>
+              <div
+                className="createPostBckg"
+                onClick={() => closeModal()}
+              ></div>
+              <div className="menudropdown">
+                {!user && (
+                  <>
+                    <NavLink
+                      to="/login"
+                      exact={true}
+                      activeClassName="active"
+                      className={"navbarLinks"}
+                    >
+                      Login
+                    </NavLink>
 
-                  <NavLink
-                    to="/sign-up"
-                    exact={true}
-                    activeClassName="active"
-                    className={"navbarLinks"}
-                  >
-                    Sign Up
-                  </NavLink>
-                </>
-              )}
-              {user && (
-                <>
-                  <NavLink
-                    to="/spots/new"
-                    exact={true}
-                    activeClassName="active"
-                    className={"navbarLinks"}
-                  >
-                    New Spot
-                  </NavLink>
-                  <NavLink to={`/users/${user.id}`} className={"navbarLinks"}>
-                    Profile
-                  </NavLink>
+                    <NavLink
+                      to="/sign-up"
+                      exact={true}
+                      activeClassName="active"
+                      className={"navbarLinks"}
+                    >
+                      Sign Up
+                    </NavLink>
+                  </>
+                )}
+                {user && (
+                  <>
+                    <NavLink
+                      to="/spots/new"
+                      exact={true}
+                      activeClassName="active"
+                      className={"navbarLinks"}
+                    >
+                      New Spot
+                    </NavLink>
+                    <NavLink to={`/users/${user.id}`} className={"navbarLinks"}>
+                      Profile
+                    </NavLink>
 
-                  <LogoutButton />
-                </>
-              )}
-            </div>
+                    <LogoutButton />
+                  </>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>

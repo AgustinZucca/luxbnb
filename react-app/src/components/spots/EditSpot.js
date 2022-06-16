@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { fetchSpot, removeSpot, updateSpot, uploadFile } from "../../store/spots";
+import {
+  fetchSpot,
+  removeSpot,
+  updateSpot,
+  uploadFile,
+  removeImg,
+} from "../../store/spots";
 
 const EditSpot = () => {
   const spot = useSelector((state) => state?.spots?.spot);
   const history = useHistory();
   const dispatch = useDispatch();
-  const [image, setImage] = useState(spot?.image);
   const [address, setAddress] = useState(spot?.address);
   const [city, setCity] = useState(spot?.city);
   const [state, setState] = useState(spot?.state);
@@ -19,9 +24,10 @@ const EditSpot = () => {
   const [errors, setErrors] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const { spotId } = useParams();
-  const [imgUrl, setImgUrl] = useState(spot?.images[0]);
-  const [previewUrl, setPreviewUrl] = useState(spot?.images[0]);
-  const [oldImg, setOldImg] = useState(imgUrl);
+  const [previewUrl, setPreviewUrl] = useState(spot?.images[0]?.url);
+  const [newImg, setNewImg] = useState();
+  const [newImgId, setNewImgId] = useState(spot?.images[0]?.id);
+  const [oldImgId, setOldImgId] = useState(spot?.images[0]?.id);
 
   const updateImage = async (e) => {
     const file = e.target.files[0];
@@ -30,7 +36,8 @@ const EditSpot = () => {
     reader.onload = function (e) {
       setPreviewUrl(reader.result);
     };
-    setImgUrl(file);
+    setNewImgId(newImgId + 1);
+    setNewImg(file);
   };
 
   useEffect(async () => {
@@ -54,13 +61,14 @@ const EditSpot = () => {
       price: price,
     };
     const newSpot = await dispatch(updateSpot(spotId, spot));
-    if (imgUrl !== oldImg) {
-      const imageUpload = await dispatch(uploadFile(imgUrl, newSpot.id));
+    if (newImgId !== oldImgId) {
+      const deleteImg = await dispatch(removeImg(oldImgId));
+      const imageUpload = await dispatch(uploadFile(newImg, newSpot.id));
     }
-    if (newSpot.errors) {
-      setErrors(newSpot.errors);
+    if (newSpot?.errors) {
+      setErrors(newSpot?.errors);
     } else {
-      history.push(`/spots/${newSpot.id}`);
+      history.push(`/spots/${newSpot?.id}`);
     }
   };
 
@@ -73,7 +81,7 @@ const EditSpot = () => {
   return (
     <div className="createSpotPage">
       <form onSubmit={(e) => handleSubmit(e)} className="createSpotForm">
-        <h2>Host a Spot on LuxBnB</h2>
+        <h2>Edit your spot</h2>
         <div>
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
@@ -86,6 +94,7 @@ const EditSpot = () => {
             name="img_url"
             accept=".jpg, .jpeg, .png"
             onChange={updateImage}
+            className="imgInputBtn"
           ></input>
         </div>
         {previewUrl && <img src={previewUrl} className="spotImgPreview"></img>}
@@ -227,7 +236,10 @@ const EditSpot = () => {
             />
           </div>
         </div>
-        <button className="hostSpotButton">Host Spot</button>
+        <div className="editButtonsContainer">
+          <button className="hostSpotButton">Host Spot</button>
+          <div className="deleteSpotButton" onClick={handleDeleteSpot}>Delete</div>
+        </div>
       </form>
     </div>
   );
