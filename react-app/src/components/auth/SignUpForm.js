@@ -5,7 +5,7 @@ import { signUp } from "../../store/session";
 import { closeButton } from "../Navicons";
 
 
-const SignUpForm = () => {
+const SignUpForm = ({close}) => {
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -44,23 +44,27 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
+  const switchModal = () => {
+    close()
+
+  }
+
   if (user) {
     return <Redirect to="/" />;
   }
 
   return (
+    <>
+    <div className="modalBkg" onClick={close}></div>
     <div className="signUpFormPage">
-      <div className="upperSignUpModal">
-        <div className="closeButtonSignUp">{closeButton}</div>
-        <div>Log in or sign up</div>
-      </div>
       <form onSubmit={onSignUp} className="signUpForm">
+        <div className="loginModalTitle">Sign Up to LuxBnB</div>
         <div className="signUpErrors">
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
           ))}
         </div>
-        <div className="labelInputSubmitContainer">
+        <div className="labelInputSubmitContainerSignup">
           <label>User Name</label>
           <input
             type="text"
@@ -69,7 +73,7 @@ const SignUpForm = () => {
             value={username}
           ></input>
         </div>
-        <div className="labelInputSubmitContainer">
+        <div className="labelInputSubmitContainerSignup">
           <label>Email</label>
           <input
             type="text"
@@ -78,7 +82,7 @@ const SignUpForm = () => {
             value={email}
           ></input>
         </div>
-        <div className="labelInputSubmitContainer">
+        <div className="labelInputSubmitContainerSignup">
           <label>Password</label>
           <input
             type="password"
@@ -87,7 +91,7 @@ const SignUpForm = () => {
             value={password}
           ></input>
         </div>
-        <div className="labelInputSubmitContainer">
+        <div className="labelInputSubmitContainerSignup">
           <label>Repeat Password</label>
           <input
             type="password"
@@ -97,9 +101,13 @@ const SignUpForm = () => {
             required={true}
           ></input>
         </div>
-        <button type="submit">Sign Up</button>
+        <div className="loginFormButtons">
+          <div className="signUpButtonLogin" onClick={switchModal}>Log In</div>
+          <button type="submit" className="loginButton">Sign Up</button>
+        </div>
       </form>
     </div>
+    </>
   );
 };
 

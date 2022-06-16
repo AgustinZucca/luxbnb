@@ -49,7 +49,7 @@ const NavBar = () => {
       )}
       {showSignUpModal && (
         <>
-          <SignUpForm close={() => setShowSignUpModal(false)}/>
+          <SignUpForm close={() => setShowSignUpModal(false)} showLogin={() => setShowLoginModal(true)}/>
         </>
       )}
       <div className="navbarcomponents">

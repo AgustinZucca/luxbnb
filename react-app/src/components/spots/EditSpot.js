@@ -28,6 +28,7 @@ const EditSpot = () => {
   const [newImg, setNewImg] = useState();
   const [newImgId, setNewImgId] = useState(spot?.images[0]?.id);
   const [oldImgId, setOldImgId] = useState(spot?.images[0]?.id);
+  const [showDelete, setShowDelete] = useState(false)
 
   const updateImage = async (e) => {
     const file = e.target.files[0];
@@ -80,6 +81,12 @@ const EditSpot = () => {
   // if (isLoaded) {
   return (
     <div className="createSpotPage">
+      {showDelete && (
+        <>
+        <div className="modalBkg" onClick={() => setShowDelete(false)}></div>
+        <div>Are you sure you want to delete</div>
+        </>
+      )}
       <form onSubmit={(e) => handleSubmit(e)} className="createSpotForm">
         <h2>Edit your spot</h2>
         <div>
@@ -238,7 +245,7 @@ const EditSpot = () => {
         </div>
         <div className="editButtonsContainer">
           <button className="hostSpotButton">Edit Spot</button>
-          <div className="deleteSpotButton" onClick={handleDeleteSpot}>Delete</div>
+          <div className="deleteSpotButton" onClick={() => setShowDelete(true)}>Delete</div>
         </div>
       </form>
     </div>

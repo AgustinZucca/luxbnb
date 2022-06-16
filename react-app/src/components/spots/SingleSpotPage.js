@@ -19,25 +19,25 @@ const SingleSpot = () => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [editing, setEditing] = useState(false);
   const [currReview, setCurrReview] = useState({})
-  const [avgRating, setAvgRating] = useState()
-
-  const ratingAvg = () => { 
+  const [avgRating, setAvgRating] = useState(0)
+  
+  const ratingAvg = async () => { 
     let total = 0
     let times = 0
-
-    spot?.reviews.map((review, idx) => {
+    
+    spot?.reviews?.map((review, idx) => {
+      
       total += review.rating
       times++
     })
-
     setAvgRating(total/times)
   };
 
   useEffect(async () => {
-    dispatch(fetchSpot(spotId));
+    await dispatch(fetchSpot(spotId));
     ratingAvg()
     setIsLoaded(true)
-  }, [count]);
+  }, [count, spot]);
 
   const editSpot = () => {
     history.push(`/spots/${spot?.id}/edit`);
@@ -89,7 +89,7 @@ const SingleSpot = () => {
             {spot?.address}, {spot?.city}, {spot?.state}
             <div>
               Avg. Rating
-              <Rating size={20} readonly={true} fillColor="#eb4c60" ratingValue={avgRating}/>
+              <Rating size={20} readonly={true} fillColor="#eb4c60" ratingValue={avgRating} className='avgRatingStars'/>
             </div>
           </div>
           {spot?.user_id == user?.id && (
