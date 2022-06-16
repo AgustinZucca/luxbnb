@@ -16,6 +16,7 @@ const SingleSpot = () => {
   const [rating, setRating] = useState(1);
   const [review, setReview] = useState("");
   const [count, setCount] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false)
   const [editing, setEditing] = useState(false);
   const [currReview, setCurrReview] = useState({})
   const [avgRating, setAvgRating] = useState()
@@ -35,6 +36,7 @@ const SingleSpot = () => {
   useEffect(async () => {
     dispatch(fetchSpot(spotId));
     ratingAvg()
+    setIsLoaded(true)
   }, [count]);
 
   const editSpot = () => {
@@ -63,6 +65,15 @@ const SingleSpot = () => {
   const removeReview = async (review) => {
     const delt = dispatch(deleteReview(review.id)).then(() => setCount(count + 1))
     return delt
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className="loadingPage">
+      <div><h1 className="loadingMessage">Loading Spot</h1></div>
+        <img src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"></img>
+      </div>
+    );
   }
 
   return (

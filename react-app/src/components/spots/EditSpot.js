@@ -237,7 +237,7 @@ const EditSpot = () => {
           </div>
         </div>
         <div className="editButtonsContainer">
-          <button className="hostSpotButton">Host Spot</button>
+          <button className="hostSpotButton">Edit Spot</button>
           <div className="deleteSpotButton" onClick={handleDeleteSpot}>Delete</div>
         </div>
       </form>
