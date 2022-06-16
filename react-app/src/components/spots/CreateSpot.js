@@ -1,23 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSpot, uploadFile } from "../../store/spots";
+import { createSpot, uploadFile, fetchAllSpots } from "../../store/spots";
 
 const CreateSpot = () => {
-  const user = useSelector((state) => state.session.user);
-  const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
+  // const spots = useSelector((state) => state?.spots?.allSpots);
+  const history = useHistory();
+  // const [spots, setSpots] = useState([])
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const [state, setState] = useState('Alabama');
+  const [state, setState] = useState("Alabama");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [beds, setBeds] = useState(0);
   const [baths, setBaths] = useState(0);
   const [price, setPrice] = useState(0);
   const [errors, setErrors] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false)
   const [imgUrl, setImgUrl] = useState();
   const [previewUrl, setPreviewUrl] = useState(false);
+  // const allSpots = spots[spots?.length - 1];
+  // const lastSpotId = allSpots[allSpots.length - 1].id;
+
+  // useEffect(async () => {
+  //   const spots = await dispatch(fetchAllSpots())
+  //   // setSpots(spots)
+  //   // (async () => {
+  //   //   const response = await fetch(`/api/spots/`);
+  //   //   const spots = await response.json();
+  //   //   setSpots(spots);
+  //   // })();
+  //   setIsLoaded(true)
+  // }, [dispatch])
 
   const updateImage = async (e) => {
     const file = e.target.files[0];
@@ -43,15 +59,33 @@ const CreateSpot = () => {
       price: price,
       userId: user.id,
     };
+
+
     const newSpot = await dispatch(createSpot(spot));
-    console.log(imgUrl, newSpot.id)
     const imageUpload = await dispatch(uploadFile(imgUrl, newSpot.id))
     if (newSpot.errors) {
       setErrors(newSpot.errors);
     } else {
       history.push(`/spots/${newSpot.id}`);
     }
+    // const imageUpload = await dispatch(uploadFile(imgUrl, (lastSpotId+1)));
+    // if (imageUpload.errors) {
+    //   setErrors(imageUpload.errors);
+    // } else {
+    //   const newSpot = await dispatch(createSpot(spot));
+    //   if (newSpot.errors) {
+    //     setErrors(newSpot.errors);
+    //   } else {
+    //     history.push(`/spots/${newSpot.id}`);
+    //   }
+    // }
   };
+
+  // if (!isLoaded) {
+  //   return (
+  //     <img src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"></img>
+  //   )
+  // }
 
   return (
     <div className="createSpotPage">
@@ -62,7 +96,7 @@ const CreateSpot = () => {
             <div key={ind}>{error}</div>
           ))}
         </div>
-        <div>
+        <div className="labelInputContainer">
           <label>Image</label>
           <input
             type="file"
@@ -72,7 +106,7 @@ const CreateSpot = () => {
             required
           ></input>
         </div>
-        {previewUrl && <img src={previewUrl} className='spotImgPreview'></img>}
+        {previewUrl && <img src={previewUrl} className="spotImgPreview"></img>}
         {/* <div className="labelInputContainer">
           <label>Image</label>
           <input
@@ -111,7 +145,9 @@ const CreateSpot = () => {
             value={state}
             onChange={(e) => setState(e.target.value)}
           >
-            <option value="Alabama" selected>Alabama</option>
+            <option value="Alabama" selected>
+              Alabama
+            </option>
             <option value="Alaska">Alaska</option>
             <option value="Arizona">Arizona</option>
             <option value="Arkansas">Arkansas</option>

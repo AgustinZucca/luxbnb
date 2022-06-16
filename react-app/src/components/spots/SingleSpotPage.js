@@ -89,7 +89,7 @@ const SingleSpot = () => {
         </div>
       </div>
       <div className="spotPicturesContainer">
-        <img className="spotPicture" src={spot?.images[spot?.images.length - 1]}></img>
+        <img className="spotPicture" src={spot?.images[spot?.images.length - 1]?.url}></img>
       </div>
       <div className="lowerSpotPage">
         <div className="lowerLeftSpotPage">

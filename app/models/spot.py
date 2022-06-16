@@ -27,7 +27,7 @@ class Spot(db.Model):
             'user_id': self.user_id,
             'user': self.user.to_dict(),
             'reviews': [review.to_dict() for review in self.reviews],
-            'images': [image.image_info() for image in self.images],
+            'images': [image.to_dict() for image in self.images],
             'address': self.address,
             'city': self.city,
             'state': self.state,
