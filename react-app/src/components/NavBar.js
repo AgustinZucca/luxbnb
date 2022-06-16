@@ -7,6 +7,8 @@ import "./css/navbar.css";
 import { fetchAllSpots } from "../store/spots";
 import LoginForm from "./auth/LoginForm";
 import SignUpForm from "./auth/SignUpForm";
+import logoIcon from '../images/Luxbnb_Logo-removebg-preview.png';
+import hostSpot from '../images/hostSpot.jpeg'
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -59,7 +61,7 @@ const NavBar = () => {
         >
           <div className="homeLinks">
             <img
-              src="/images/Luxbnb_Logo-removebg-preview.png"
+              src={logoIcon}
               className="logo"
             ></img>
             <div>luxbnb</div>
@@ -100,7 +102,7 @@ const NavBar = () => {
                     >
                       <div>
                         <img
-                          src="/images/hostSpot.jpeg"
+                          src={hostSpot}
                           className="hostSpotIcon"
                         />
                         Host Spot
