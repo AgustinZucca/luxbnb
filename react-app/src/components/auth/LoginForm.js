@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { login } from "../../store/session";
 import "./index.css";
 
-const LoginForm = ({ close }) => {
+const LoginForm = ({ close, signup }) => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +30,11 @@ const LoginForm = ({ close }) => {
   const demoLogin = (e) => {
     dispatch(login("demo@aa.io", "password"));
   };
+
+  const switchModal = () => {
+    close()
+    signup()
+  }
 
   if (user) {
     return <Redirect to="/" />;
@@ -67,7 +72,7 @@ const LoginForm = ({ close }) => {
             />
           </div>
           <div className="loginFormButtons">
-            <div className="signUpButtonLogin">Sign Up</div>
+            <div className="signUpButtonLogin" onClick={switchModal}>Sign Up</div>
             <button type="submit" className="loginButton">Login</button>
           </div>
         </form>

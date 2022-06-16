@@ -6,6 +6,7 @@ import { menuIcon } from "./Navicons";
 import "./css/navbar.css";
 import { fetchAllSpots } from "../store/spots";
 import LoginForm from "./auth/LoginForm";
+import SignUpForm from "./auth/SignUpForm";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,12 @@ const NavBar = () => {
     <nav className="navbar">
       {showLoginModal && (
         <>
-          <LoginForm close={() => setShowLoginModal(false)}/>
+          <LoginForm close={() => setShowLoginModal(false)} signup={() => setShowSignUpModal(true)}/>
+        </>
+      )}
+      {showSignUpModal && (
+        <>
+          <SignUpForm close={() => setShowSignUpModal(false)}/>
         </>
       )}
       <div className="navbarcomponents">
@@ -76,14 +82,12 @@ const NavBar = () => {
                       Login
                     </div>
 
-                    <NavLink
-                      to="/sign-up"
-                      exact={true}
-                      activeClassName="active"
+                    <div
                       className={"navbarLinks"}
+                      onClick={() => setShowSignUpModal(true)}
                     >
                       Sign Up
-                    </NavLink>
+                    </div>
                   </>
                 )}
                 {user && (
@@ -102,9 +106,7 @@ const NavBar = () => {
                         Host Spot
                       </div>
                     </NavLink>
-                    <NavLink to={`/users/${user.id}`} className={"navbarLinks"}>
-                      Profile
-                    </NavLink>
+                    
 
                     <LogoutButton />
                   </>
