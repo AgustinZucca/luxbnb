@@ -5,12 +5,14 @@ import LogoutButton from "./auth/LogoutButton";
 import { menuIcon } from "./Navicons";
 import "./css/navbar.css";
 import { fetchAllSpots } from "../store/spots";
-
+import LoginForm from "./auth/LoginForm";
 
 const NavBar = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const user = useSelector((state) => state?.session?.user);
   const [showDropDown, setShowDropDown] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
 
   const openDropDown = () => {
     setShowDropDown(!showDropDown);
@@ -25,16 +27,23 @@ const NavBar = () => {
 
   const closeModal = () => {
     setShowDropDown(false);
+    setShowLoginModal(false);
+    setShowSignUpModal(false);
   };
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await dispatch(fetchAllSpots());
     })();
   }, [dispatch]);
 
   return (
     <nav className="navbar">
+      {showLoginModal && (
+        <>
+          <LoginForm close={() => setShowLoginModal(false)}/>
+        </>
+      )}
       <div className="navbarcomponents">
         <NavLink
           to="/"
@@ -43,7 +52,10 @@ const NavBar = () => {
           className={"navbarLinks"}
         >
           <div className="homeLinks">
-            <img src="/Luxbnb_Logo-removebg-preview.png" className="logo"></img>
+            <img
+              src="/images/Luxbnb_Logo-removebg-preview.png"
+              className="logo"
+            ></img>
             <div>luxbnb</div>
           </div>
         </NavLink>
@@ -52,21 +64,17 @@ const NavBar = () => {
 
           {showDropDown && (
             <>
-              <div
-                className="createPostBckg"
-                onClick={() => closeModal()}
-              ></div>
+              <div className="navbarpageBkg" onClick={() => closeModal()}></div>
+
               <div className="menudropdown">
                 {!user && (
                   <>
-                    <NavLink
-                      to="/login"
-                      exact={true}
-                      activeClassName="active"
+                    <div
                       className={"navbarLinks"}
+                      onClick={() => setShowLoginModal(true)}
                     >
                       Login
-                    </NavLink>
+                    </div>
 
                     <NavLink
                       to="/sign-up"
@@ -86,7 +94,13 @@ const NavBar = () => {
                       activeClassName="active"
                       className={"navbarLinks"}
                     >
-                      New Spot
+                      <div>
+                        <img
+                          src="/images/hostSpot.jpeg"
+                          className="hostSpotIcon"
+                        />
+                        Host Spot
+                      </div>
                     </NavLink>
                     <NavLink to={`/users/${user.id}`} className={"navbarLinks"}>
                       Profile

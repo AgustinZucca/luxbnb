@@ -33,12 +33,12 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
-        <Route path='/login' exact={true}>
+        {/* <Route path='/login' exact={true}>
           <LoginForm />
         </Route>
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
-        </Route>
+        </Route> */}
         <ProtectedRoute path='/users' exact={true} >
           <UsersList/>
         </ProtectedRoute>
@@ -54,9 +54,9 @@ function App() {
         <ProtectedRoute path='/spots/:spotId/edit' exact={true} >
           <EditSpot />
         </ProtectedRoute>
-        <ProtectedRoute path='/' exact={true} >
+        <Route path='/' exact={true} >
           <Feed />
-        </ProtectedRoute>
+        </Route>
       </Switch>
     </BrowserRouter>
   );

@@ -25,7 +25,7 @@ const Feed = () => {
 
   return (
     <div className="mainFeedPage">
-      {spots?.map((spot, idx) => (
+      {spots?.slice(0).reverse().map((spot, idx) => (
         <div key={idx}>
           <div
             className="spotFeedCard"
