@@ -25,9 +25,8 @@ const editSpot = (spot) => ({
   payload: spot,
 });
 
-const deleteSpot = (spot) => ({
+const deleteSpot = () => ({
   type: DELETE_SPOT,
-  payload: spot,
 });
 
 export const createSpot = (spot) => async (dispatch) => {
@@ -91,11 +90,28 @@ export const uploadFile = (img_url, spotId) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
+    return data
+  } else {
+    return {'errors': ["Invalid image type"]};
+  }
+};
+
+export const removeImg = (imgId) => async (dispatch) => {
+  const response = await fetch(`/api/spots/images/${imgId}`, {
+    method: "DELETE"
+  })
+  if (response.ok) {
+    const data = await response.json();
     return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
   } else {
     return ["An error occurred. Please try again."];
   }
-};
+}
 
 export const updateSpot = (spotId, spot) => async (dispatch) => {
   const { address, city, state, name, description, beds, baths, price } =
@@ -156,8 +172,6 @@ export default function reducer(state = {}, action) {
     case GET_SPOT:
       return { ...state, spot: action.payload };
     case EDIT_SPOT:
-      return { ...state, spot: action.payload };
-    case DELETE_SPOT:
       return { ...state, spot: action.payload };
     case ALL_SPOTS:
       const newState = { ...state };

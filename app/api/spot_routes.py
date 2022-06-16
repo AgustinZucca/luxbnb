@@ -23,9 +23,9 @@ def validation_errors_to_error_messages(validation_errors):
 
 # Get all spots
 @spot_routes.route('/')
-@login_required
 def spots():
     spots = Spot.query.all()
+
     return {'spots': [spot.to_dict() for spot in spots]}
 
 
@@ -110,10 +110,12 @@ def deleteSpot(spotId):
 def add_spot_images(spot_id):
 
     if "img_url" in request.files:
-            image = request.files["img_url"]
 
+            image = request.files["img_url"]
             if not allowed_file(image.filename):
+
                 return {"errors": ["Image file type not permitted"]}, 400
+
 
             image.filename = get_unique_filename(image.filename)
 
@@ -129,5 +131,16 @@ def add_spot_images(spot_id):
             db.session.add(new_image)
             db.session.commit()
             return {"url": url}
+            
     return {'errors': 'Image upload failed'}
     
+
+@spot_routes.route("/images/<int:img_id>", methods=['DELETE'])
+@login_required
+def remove_spot_image(img_id):
+    img = Image.query.get(img_id)
+    print('INSIDE DELETE IMG ROUTE \n\n', img)
+    db.session.delete(img)
+    db.session.commit()
+
+    return
