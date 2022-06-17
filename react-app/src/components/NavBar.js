@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import LogoutButton from "./auth/LogoutButton";
 import { menuIcon } from "./Navicons";
 import "./css/navbar.css";
@@ -10,8 +10,10 @@ import SignUpForm from "./auth/SignUpForm";
 import logoIcon from '../images/Luxbnb_Logo-removebg-preview.png';
 import hostSpot from '../images/hostSpot.jpeg'
 
+
 const NavBar = () => {
   const dispatch = useDispatch();
+  const history = useHistory()
   const user = useSelector((state) => state?.session?.user);
   const [showDropDown, setShowDropDown] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -37,6 +39,9 @@ const NavBar = () => {
   useEffect(() => {
     (async () => {
       await dispatch(fetchAllSpots());
+      setShowDropDown(false);
+    setShowLoginModal(false);
+    setShowSignUpModal(false);
     })();
   }, [dispatch]);
 
@@ -57,7 +62,7 @@ const NavBar = () => {
           to="/"
           exact={true}
           activeClassName="active"
-          className={"navbarLinks"}
+          className={"navbarLinksHome"}
         >
           <div className="homeLinks">
             <img
@@ -67,6 +72,7 @@ const NavBar = () => {
             <div>luxbnb</div>
           </div>
         </NavLink>
+        <div>Host your Luxury spot!</div>
         <div className="navbardropdown" onClick={openDropDown}>
           {menuIcon}
 
@@ -78,18 +84,21 @@ const NavBar = () => {
                 {!user && (
                   <>
                     <div
-                      className={"navbarLinks"}
+                      className={"navbarLinks1"}
                       onClick={() => setShowLoginModal(true)}
                     >
                       Login
                     </div>
 
                     <div
-                      className={"navbarLinks"}
+                      className={"navbarLinks1"}
                       onClick={() => setShowSignUpModal(true)}
                     >
                       Sign Up
                     </div>
+                    <div
+                      className={"navbarLinks"} onClick={() => history.push('/aboutme')}
+                    >About Me</div>
                   </>
                 )}
                 {user && (
@@ -98,7 +107,7 @@ const NavBar = () => {
                       to="/spots/new"
                       exact={true}
                       activeClassName="active"
-                      className={"navbarLinks"}
+                      className={"navbarLinks1"}
                     >
                       <div>
                         <img
@@ -113,10 +122,10 @@ const NavBar = () => {
                     exact={true}
                       activeClassName="active"
                       className={"navbarLinks"}
-                    >About Developer</NavLink>
+                    >About Me</NavLink>
                     
 
-                    <LogoutButton />
+                    <LogoutButton close={() => closeModal()}/>
                   </>
                 )}
               </div>

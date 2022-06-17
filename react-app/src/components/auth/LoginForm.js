@@ -16,6 +16,9 @@ const LoginForm = ({ close, signup }) => {
     const data = await dispatch(login(email, password));
     if (data) {
       setErrors(data);
+    } else {
+      setEmail('')
+      setPassword('')
     }
   };
 
@@ -29,6 +32,8 @@ const LoginForm = ({ close, signup }) => {
 
   const demoLogin = (e) => {
     dispatch(login("demo@aa.io", "password"));
+    setEmail('')
+      setPassword('')
   };
 
   const switchModal = () => {
