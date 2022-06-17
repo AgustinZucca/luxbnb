@@ -45,7 +45,7 @@ export const createReview = (fullReview) => async (dispatch) => {
       return data;
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return {'errors': ["An error occurred. Please try again."]};
   }
 };
 
@@ -68,7 +68,7 @@ export const updateReview = (reviewId, review) => async (dispatch) => {
       return data;
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return {'errors': ["An error occurred. Please try again."]};
   }
 };
 

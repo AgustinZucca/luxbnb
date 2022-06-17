@@ -62,12 +62,14 @@ const SingleSpot = () => {
     };
     const newReview = await dispatch(createReview(fullReview));
     setCount(count + 1);
+    console.log(newReview)
     if (newReview.errors) {
       setReviewErr(true)
     } else {
 
       setRating(0)
       setReview("")
+      setReviewErr(false)
   
       return newReview;
     }
@@ -166,7 +168,7 @@ const SingleSpot = () => {
           <p style={{ fontSize: "20px" }}>Reviews</p>
           <div className="spotReviewsContainer">
             {reviewErr && (
-              <div className="reviewErr">Review must contain a comment</div>
+              <div className="reviewErr">Review must contain a 250 or less character comment</div>
             )}
             <form
               onSubmit={(e) => handleReviewSubmit(e)}
@@ -181,6 +183,7 @@ const SingleSpot = () => {
                   size={20}
                   onClick={(rating) => setRating(rating)}
                   ratingValue={rating}
+                  className='inputStars'
                 />
               </div>
               <textarea

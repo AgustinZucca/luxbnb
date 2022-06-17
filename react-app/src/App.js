@@ -13,6 +13,7 @@ import SingleSpot from './components/spots/SingleSpotPage';
 import EditSpot from './components/spots/EditSpot';
 import Feed from './components/Feed';
 import AboutMe from './components/Aboutme';
+import Footer from './components/Footer';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -32,6 +33,7 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar />
+      <Footer />
       <Switch>
         {/* <Route path='/login' exact={true}>
           <LoginForm />

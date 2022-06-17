@@ -15,7 +15,7 @@ const AboutMe = () => {
                 <img src={MyImg} className="aboutMeImg"></img>
             </div>
             <div className="aboutMeInfo">
-                <h3>I am a software engineer that loves travelling, therefore deciding to remake the most known vacation rental service was an easy choice for me. Check out more of my work in the links below:    </h3>
+                <h3>I am a software engineer that loves travelling; therefore, deciding to remake the most known vacation rental service was an easy choice for me. Check out more of my work in the links below:    </h3>
             </div>
             <div className="icons">
                 <div>
