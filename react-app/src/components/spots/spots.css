@@ -276,6 +276,14 @@ padding-bottom: 300px;
   border: 1px solid black;
 }
 
+.spotImgPreviewEdit {
+  margin-top: 15px;
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  border: 1px solid black;
+}
+
 input[type="file" i] {
   width: fit-content;
   cursor: pointer;
