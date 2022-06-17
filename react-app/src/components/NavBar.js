@@ -49,7 +49,7 @@ const NavBar = () => {
       )}
       {showSignUpModal && (
         <>
-          <SignUpForm close={() => setShowSignUpModal(false)}/>
+          <SignUpForm close={() => setShowSignUpModal(false)} showLogin={() => setShowLoginModal(true)}/>
         </>
       )}
       <div className="navbarcomponents">
@@ -108,6 +108,12 @@ const NavBar = () => {
                         Host Spot
                       </div>
                     </NavLink>
+                    <NavLink
+                    to='/aboutme'
+                    exact={true}
+                      activeClassName="active"
+                      className={"navbarLinks"}
+                    >About Developer</NavLink>
                     
 
                     <LogoutButton />

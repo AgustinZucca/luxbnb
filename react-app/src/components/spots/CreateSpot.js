@@ -21,6 +21,7 @@ const CreateSpot = () => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [imgUrl, setImgUrl] = useState();
   const [previewUrl, setPreviewUrl] = useState(false);
+  const [hosting, setHosting] = useState(false)
   // const allSpots = spots[spots?.length - 1];
   // const lastSpotId = allSpots[allSpots.length - 1].id;
 
@@ -37,17 +38,21 @@ const CreateSpot = () => {
 
   const updateImage = async (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function (e) {
-      setPreviewUrl(reader.result);
-    };
-    setImgUrl(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function (e) {
+        setPreviewUrl(reader.result);
+      };
+      setImgUrl(file);
+    } else {
+      setPreviewUrl(false)
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setHosting(true)
     const spot = {
       address: address,
       city: city,
@@ -64,6 +69,8 @@ const CreateSpot = () => {
     const newSpot = await dispatch(createSpot(spot));
     const imageUpload = await dispatch(uploadFile(imgUrl, newSpot.id))
     if (newSpot.errors) {
+      setHosting(false)
+      window.scrollTo(0, 0);
       setErrors(newSpot.errors);
     } else {
       history.push(`/spots/${newSpot.id}`);
@@ -93,10 +100,10 @@ const CreateSpot = () => {
         <h2>Host a Spot on LuxBnB</h2>
         <div>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div key={ind} className='createSpotErrors'>{error}</div>
           ))}
         </div>
-        <div className="labelInputContainer">
+        <div className="labelInputContainerImage">
           <label>Image</label>
           <input
             type="file"
@@ -256,7 +263,13 @@ const CreateSpot = () => {
             />
           </div>
         </div>
+        {hosting && (
+          <button className="hostingSpotButton" disabled>Hosting...</button>
+        )}
+        {!hosting && (
+
         <button className="hostSpotButton">Host Spot</button>
+        )}
       </form>
     </div>
   );

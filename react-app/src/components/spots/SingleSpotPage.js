@@ -6,6 +6,7 @@ import { Rating } from "react-simple-star-rating";
 import "./spots.css";
 import { createReview, deleteReview } from "../../store/reviews";
 import EditReview from "../EditReviewModal";
+import { checkIn, dedicatedWorkspace, freeTV, kitchen, newIcon, parking, secCams, washer, wifi } from "../Navicons";
 
 const SingleSpot = () => {
   const history = useHistory();
@@ -19,25 +20,29 @@ const SingleSpot = () => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [editing, setEditing] = useState(false);
   const [currReview, setCurrReview] = useState({})
-  const [avgRating, setAvgRating] = useState()
-
-  const ratingAvg = () => { 
+  const [reviewErr, setReviewErr] = useState()
+  const [avgRating, setAvgRating] = useState(0)
+  
+  const ratingAvg = async () => { 
     let total = 0
     let times = 0
-
-    spot?.reviews.map((review, idx) => {
+    
+    spot?.reviews?.map((review, idx) => {
+      
       total += review.rating
       times++
     })
-
     setAvgRating(total/times)
   };
 
   useEffect(async () => {
-    dispatch(fetchSpot(spotId));
-    ratingAvg()
+    await dispatch(fetchSpot(spotId));
     setIsLoaded(true)
   }, [count]);
+  
+  useEffect(async () => {
+    ratingAvg()
+  }, [spot]);
 
   const editSpot = () => {
     history.push(`/spots/${spot?.id}/edit`);
@@ -45,6 +50,10 @@ const SingleSpot = () => {
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
+    if (review === '') {
+      setReviewErr(true)
+      return
+    }
     const fullReview = {
       user_id: user.id,
       spot_id: spot.id,
@@ -53,8 +62,15 @@ const SingleSpot = () => {
     };
     const newReview = await dispatch(createReview(fullReview));
     setCount(count + 1);
+    if (newReview.errors) {
+      setReviewErr(true)
+    } else {
 
-    return newReview;
+      setRating(0)
+      setReview("")
+  
+      return newReview;
+    }
   };
 
   const editReview = (review) => {
@@ -89,7 +105,7 @@ const SingleSpot = () => {
             {spot?.address}, {spot?.city}, {spot?.state}
             <div>
               Avg. Rating
-              <Rating size={20} readonly={true} fillColor="#eb4c60" ratingValue={avgRating}/>
+              <Rating size={20} readonly={true} fillColor="#eb4c60" ratingValue={avgRating} className='avgRatingStars'/>
             </div>
           </div>
           {spot?.user_id == user?.id && (
@@ -116,9 +132,42 @@ const SingleSpot = () => {
             </div>
             {spot?.description}
           </div>
+          <div>
+          <div>
+              <p style={{ fontSize: "20px" }}>What this place offers</p>
+            </div>
+            <div className="placeOfferingsIconsContainer">
+              <div className="placeOfferingsIcons">
+                {dedicatedWorkspace} <div className="offeringTitles">Dedicated Workspace</div>
+              </div>
+              <div className="placeOfferingsIcons">
+                {checkIn} <div className="offeringTitles">Self check-in with smart lock</div>
+              </div>
+              <div className="placeOfferingsIcons">
+                {secCams} <div className="offeringTitles">Security cameras on property</div>
+              </div>
+              <div className="placeOfferingsIcons">
+                {washer} <div className="offeringTitles">Free washer</div>
+              </div>
+              <div className="placeOfferingsIcons">
+                {freeTV} <div className="offeringTitles">HDTV with Amazon Prime Video, Fire TV, Netflix, premium cable</div>
+              </div>
+              <div className="placeOfferingsIcons">
+                {parking} <div className="offeringTitles">Free parking on premises</div>
+              </div>
+              <div className="placeOfferingsIcons">
+                {wifi} <div className="offeringTitles">Free Wifi</div>
+              </div>
+              <div className="placeOfferingsIcons">
+                {kitchen} <div className="offeringTitles">Kitchen</div>
+              </div>
+            </div>
+          </div>
           <p style={{ fontSize: "20px" }}>Reviews</p>
           <div className="spotReviewsContainer">
-            {}
+            {reviewErr && (
+              <div className="reviewErr">Review must contain a comment</div>
+            )}
             <form
               onSubmit={(e) => handleReviewSubmit(e)}
               className="newReviewForm"
@@ -136,8 +185,9 @@ const SingleSpot = () => {
               </div>
               <textarea
                 className="reviewInput"
-                placeholder="Leave your review of this spot"
+                placeholder={"Leave your review of this spot"}
                 onChange={(e) => setReview(e.target.value)}
+                value={review}
               />
               <button className="newReviewSubmit">Submit</button>
             </form>
