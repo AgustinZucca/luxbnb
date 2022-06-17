@@ -1,0 +1,23 @@
+.footerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 30;
+    position: fixed;
+    height: 30px;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+border-top: .5px solid black;
+    overflow-x: hidden;
+    background-color: white;
+    padding: 0 30px;
+}
+
+.footerTextInfo {
+    border: 1px solid black;
+}
+
+.mynameFooter {
+    padding-right: 50px;
+}

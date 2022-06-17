@@ -11,16 +11,25 @@ const SignUpForm = ({close}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [signingUp, setSigningUp] = useState(false)
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
   const onSignUp = async (e) => {
     e.preventDefault();
+    setSigningUp(true)
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
       console.log(data);
-      if (data) {
-        setErrors(data);
+      if (data.errors) {
+        setErrors(data.errors);
+        setSigningUp(false)
+      } else {
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        setRepeatPassword('')
+        setErrors([])
       }
     } else {
       setErrors(["Repeat Password must match Password"]);
@@ -102,7 +111,14 @@ const SignUpForm = ({close}) => {
           ></input>
         </div>
         <div className="loginFormButtons">
+          {!signingUp && (
+
           <button type="submit" className="signUpButton">Sign Up</button>
+          )}
+          {signingUp && (
+          <button type="submit" className="signUpButton" disabled>Signing Up...</button>
+
+          )}
         </div>
       </form>
       <div onClick={demoLogin} className="demoUserButton">
