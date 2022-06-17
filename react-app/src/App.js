@@ -12,7 +12,7 @@ import CreateSpot from './components/spots/CreateSpot';
 import SingleSpot from './components/spots/SingleSpotPage';
 import EditSpot from './components/spots/EditSpot';
 import Feed from './components/Feed';
-
+import AboutMe from './components/Aboutme';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -54,6 +54,9 @@ function App() {
         <ProtectedRoute path='/spots/:spotId/edit' exact={true} >
           <EditSpot />
         </ProtectedRoute>
+        <Route path='/aboutme' exact={true} >
+          <AboutMe />
+        </Route>
         <Route path='/' exact={true} >
           <Feed />
         </Route>

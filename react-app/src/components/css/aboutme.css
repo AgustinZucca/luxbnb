@@ -1,0 +1,51 @@
+.aboutMePage {
+    display: flex;
+align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.aboutMeName {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadein 4s;
+}
+
+.aboutMeImg {
+
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 500px;
+    animation: fadein 4s;
+}
+
+.aboutMeInfo {
+    display: flex;
+    text-align: center;
+    width: 600px;
+    animation: fadein 4s;
+}
+
+.icons {
+    animation: fadein 4s;
+    display: flex;
+}
+
+.linkedinIcon {
+    margin-left: 20px;
+    width: 120px;
+}
+
+@keyframes fadein {
+    0% {
+      opacity: 0;
+      transform: scale(0.1, 0.1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1, 1);
+    }
+  }
