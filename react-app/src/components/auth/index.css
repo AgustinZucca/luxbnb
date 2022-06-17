@@ -49,6 +49,16 @@
   margin-left: 10px;
 }
 
+.signUpButton {
+  border: 0;
+  background-color: #ff435c;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
 .signUpButtonLogin {
   background-color: rgb(255, 123, 62);
   color: white;
@@ -167,4 +177,10 @@
 
 .demoUserButton:hover {
   background-color: #ff435c;
+}
+
+.logoutButton {
+  border: 0;
+  background-color: #ff435c;
+  color: white;
 }

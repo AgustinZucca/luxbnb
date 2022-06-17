@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { signUp } from "../../store/session";
+import { signUp, login } from "../../store/session";
 import { closeButton } from "../Navicons";
 
 
@@ -44,10 +44,10 @@ const SignUpForm = ({close}) => {
     setRepeatPassword(e.target.value);
   };
 
-  const switchModal = () => {
-    close()
+  const demoLogin = (e) => {
+    dispatch(login("demo@aa.io", "password"));
+  };
 
-  }
 
   if (user) {
     return <Redirect to="/" />;
@@ -102,10 +102,12 @@ const SignUpForm = ({close}) => {
           ></input>
         </div>
         <div className="loginFormButtons">
-          <div className="signUpButtonLogin" onClick={switchModal}>Log In</div>
-          <button type="submit" className="loginButton">Sign Up</button>
+          <button type="submit" className="signUpButton">Sign Up</button>
         </div>
       </form>
+      <div onClick={demoLogin} className="demoUserButton">
+          Demo User
+        </div>
     </div>
     </>
   );

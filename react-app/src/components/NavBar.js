@@ -108,6 +108,12 @@ const NavBar = () => {
                         Host Spot
                       </div>
                     </NavLink>
+                    <NavLink
+                    to='/aboutme'
+                    exact={true}
+                      activeClassName="active"
+                      className={"navbarLinks"}
+                    >About Developer</NavLink>
                     
 
                     <LogoutButton />

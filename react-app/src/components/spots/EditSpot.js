@@ -80,11 +80,18 @@ const EditSpot = () => {
 
   // if (isLoaded) {
   return (
-    <div className="createSpotPage">
+    <div className="createSpotPageEdit">
       {showDelete && (
         <>
         <div className="modalBkg" onClick={() => setShowDelete(false)}></div>
-        <div>Are you sure you want to delete</div>
+        <div className="deleteModal">
+          <div style={{ fontSize: "20px", marginBottom: '10px' }}>Deleting Spot</div>
+          <div>Are you sure you want to delete this spot?</div>
+          <div className="deleteModalButtons">
+            <div className="cancelButton" onClick={() => setShowDelete(false)}>Cancel</div>
+            <div className="deleteButtonFINAL" onClick={() => handleDeleteSpot()}>Delete</div>
+          </div>
+          </div>
         </>
       )}
       <form onSubmit={(e) => handleSubmit(e)} className="createSpotForm">
@@ -244,7 +251,7 @@ const EditSpot = () => {
           </div>
         </div>
         <div className="editButtonsContainer">
-          <button className="hostSpotButton">Edit Spot</button>
+          <button className="hostSpotButton" >Edit Spot</button>
           <div className="deleteSpotButton" onClick={() => setShowDelete(true)}>Delete</div>
         </div>
       </form>
