@@ -16,7 +16,8 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 150vh;
+    overflow-y: hidden;
     cursor:default;
     background-color: rgba(0, 0, 0, 0.299);
 }
@@ -47,7 +48,8 @@
     background-color: white;
     width: 100px;
     height: 100px;
-    border: 1px solid black;
+    border: .5px solid rgba(0, 0, 0, 0.393);
+    border-radius: 5px;
     padding: 10px;
 }
 

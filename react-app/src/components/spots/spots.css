@@ -8,6 +8,10 @@
   height: 400px;
 }
 
+.avgRatingStars {
+  z-index: -1;
+}
+
 .spotPicture {
   width: 100%;
   height: 100%;
@@ -33,12 +37,12 @@
   font-size: 25px;
   margin: 0;
 }
+
 .spotDescription {
   border-bottom: 0.5px solid black;
   padding: 0px 0px;
   padding-bottom: 30px;
 }
-
 .spotReviewsContainer {
   padding: 00px 0px;
 }
@@ -166,11 +170,17 @@
 /*CREATE SPOT PAGE CSS*/
 .createSpotPage {
 padding-top: 100px;
+padding-bottom: 300px;
   display: flex;
   height: 100vh;
   width: 100vw;
   overflow-x: hidden;
+  overflow-y: hidden;
   justify-content: center;
+}
+
+.createSpotErrors {
+  color: red;
 }
 
 .createSpotForm {
@@ -208,6 +218,16 @@ padding-top: 100px;
   margin: 15px 0px;
 }
 
+.hostingSpotButton {
+  border: 0;
+  background-color: #993744;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  transition: .5s;
+  cursor: pointer;
+}
+
 .hostSpotButton {
   border: 0;
   background-color: #eb4c60;
@@ -242,7 +262,41 @@ padding-top: 100px;
   border: 1px solid black;
 }
 
+input[type="file" i] {
+  width: fit-content;
+  cursor: pointer;
+}
+
+input[type=file]::file-selector-button {
+  border: 0;
+  background-color: #eb4c60;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.labelInputContainerImage {
+  width: 75%;
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0px;
+}
+
+
 /* EDIT/DELETE SPOT */
+.createSpotPageEdit {
+  padding-top: 100px;
+  padding-bottom: 300px;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    justify-content: center;
+  }
+
 .editButtonsContainer {
   display: flex;
   justify-content: space-between;
@@ -265,6 +319,79 @@ padding-top: 100px;
   padding: 15px;
   width: fit-content;
   cursor: pointer;
+}
+
+.placeOfferingsIconsContainer {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 0.5px solid black;
+}
+
+.placeOfferingsIcons {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.offeringTitles {
+  padding: 0 10px;
+  width: 150px;
+}
+
+.deleteModal {
+  margin-top: -150px;
+  margin-left: -200px;
+  width: 400px;
+  padding: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.47);
+  background-color: white;
+  border-radius: 5px;
+  z-index: 50;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  animation: popup 0.3s;
+}
+
+@keyframes popup {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.deleteModalButtons {
+  display: flex;
+  padding: 10px 0;
+}
+
+.cancelButton {
+  padding: 5px;
+  border: .5px solid rgba(0, 0, 0, 0.416);
+  border-radius: 5px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.deleteButtonFINAL {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #f72440;
+  color: white;
+  cursor: pointer;
+}
+
+.reviewErr {
+  color: #f72440;
 }
 
 

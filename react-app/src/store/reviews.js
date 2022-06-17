@@ -23,7 +23,7 @@ export const allReviews = (spotId) => async (dispatch) => {
       return data;
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return {'errors': ["Review must have comment"]};
   }
 };
 
