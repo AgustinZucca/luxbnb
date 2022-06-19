@@ -33,6 +33,7 @@ const SignUpForm = ({close}) => {
       }
     } else {
       setErrors(["Repeat Password must match Password"]);
+      setSigningUp(false)
     }
     return;
   };

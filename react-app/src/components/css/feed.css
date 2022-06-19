@@ -1,7 +1,9 @@
 .mainFeedPage {
     margin-top: 100px;
+    margin-bottom: 90px;
     display: flex;
-    padding: 0px 10%;
+    margin-left: 10%;
+    margin-right: 5%;
     flex-wrap: wrap;
 }
 
