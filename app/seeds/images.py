@@ -45,6 +45,35 @@ def seed_images():
         spot_id=11,
         url='https://luxbnb.s3.us-east-2.amazonaws.com/boston1.png'
     )
+    img12 = Image(
+        spot_id=12,
+        url='https://luxbnb.s3.us-east-2.amazonaws.com/sf1.png'
+    )
+    img13 = Image(
+        spot_id=13,
+        url='https://luxbnb.s3.us-east-2.amazonaws.com/losaltos1.png'
+    )
+    img14 = Image(
+        spot_id=14,
+        url='https://luxbnb.s3.us-east-2.amazonaws.com/losaltos2.png'
+    )
+    img15 = Image(
+        spot_id=15,
+        url='https://luxbnb.s3.us-east-2.amazonaws.com/bh1.png'
+    )
+    img16 = Image(
+        spot_id=16,
+        url='https://luxbnb.s3.us-east-2.amazonaws.com/miami1.png'
+    )
+    img17 = Image(
+        spot_id=17,
+        url='https://luxbnb.s3.us-east-2.amazonaws.com/bh2.png'
+    )
+    img18 = Image(
+        spot_id=18,
+        url='https://luxbnb.s3.us-east-2.amazonaws.com/ny1.png'
+    )
+
 
     db.session.add(img1)
     db.session.add(img2)
@@ -57,6 +86,13 @@ def seed_images():
     db.session.add(img9)
     db.session.add(img10)
     db.session.add(img11)
+    db.session.add(img12)
+    db.session.add(img13)
+    db.session.add(img14)
+    db.session.add(img15)
+    db.session.add(img16)
+    db.session.add(img17)
+    db.session.add(img18)
 
     db.session.commit()
 

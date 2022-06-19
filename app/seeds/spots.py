@@ -115,14 +115,74 @@ def seed_spots():
         price='7000')
     spot12 = Spot(
         user_id=6,
-        address='55 Commercial Wharf #12',
-        city='Boston',
-        state='Massachusetts',
-        name='Boston Lux Aparment',
-        description="Exceptional designer waterfront home. Two combined floor-through units create a rare and coveted floor plan that lives like a single family with the ease of one floor living.  Customized 3 bed 3 bath expands across two wings with 2565 sq ft. Live, entertain and dine in one wing and retreat to a separate primary suite sanctuary in the other.",
-        beds='3',
-        baths='3',
-        price='7000')
+        address='2000 Washington, #7',
+        city='San Francisco',
+        state='California',
+        name='Bay Area High Life',
+        description="Designed by architect Andrew Skurman, whose design for the Penthouse received the Julia Morgan Award from the Institute of Classical Architecture & Arts, the residence is distinguished by a sweeping suite of grand yet elegant entertaining rooms from entrance gallery to living room, family room, expansive kitchen & formal dining room.",
+        beds='4',
+        baths='5',
+        price='9000')
+    spot13 = Spot(
+        user_id=1,
+        address='24301 Elise Ct',
+        city='Los Altos Hills',
+        state='California',
+        name='Privacy in the Hills',
+        description="Due to the architecture's complexity and the opportunities of the views, one begins to fully grasp the ambition of the undertaking. The architect and the owner analyzed every aspect of the experience, including examining the neighborhood, exploring sight lines, light conditions, and space progressions based on their experience through an intimate study of the topography. ",
+        beds='5',
+        baths='5',
+        price='9500')
+    spot14 = Spot(
+        user_id=2,
+        address='10560 Blandor Way',
+        city='Los Altos Hills',
+        state='California',
+        name='Sweeping Bay Views',
+        description="Custom contemporary with sweeping San Francisco Bay views from almost every room on more than 1.2 gated acres. Indoor/outdoor livability is a signature of the home, including wraparound grounds with rare drivable landscaping that creates the perfect venue for car shows.",
+        beds='4',
+        baths='5',
+        price='9200')
+    spot15 = Spot(
+        user_id=3,
+        address='67 Beverly Park Court',
+        city='Beverly Hills',
+        state='California',
+        name='Hollywood Golden Era',
+        description="Large Motor Court with Central Fountain leads to Grand Stone Entry to Center Hall and Massive Public rooms with 20' ceilings and stone floors. Ancient Stone Fireplaces. Living Room overlooks acres of grassy yard.",
+        beds='12',
+        baths='14',
+        price='15000')
+    spot16 = Spot(
+        user_id=4,
+        address='130 Palm Ave',
+        city='Miami Beach',
+        state='Florida',
+        name='Vice City Mansion',
+        description="One of the finest custom-built homes on its way to completion adorned with intricate design in marble, wood and brass works. Kobi Karp architecture in collaboration with Argent Design working together to create this innovative, visually stunning Stately estate with finishes and details of the highest quality.",
+        beds='11',
+        baths='12',
+        price='8000')
+    spot17 = Spot(
+        user_id=5,
+        address='1109 Calle Vista Drive',
+        city='Beverly Hills',
+        state='California',
+        name='Beverly Hills Living',
+        description="This 6 year new museum quality masterpiece, custom designed by Richard Manion and built by Peter McCoy, is truly a rare offering. Located in the most exclusive area North of Sunset in Beverly Hills, the bold architectural gated entry and completely private 1.4 acre property features an expansive motor court, and dramatic entry. Soaring ceilings with voluminous spaces which open to the vast outdoor decks and massive lawns.",
+        beds='6',
+        baths='10',
+        price='10800')
+    spot18 = Spot(
+        user_id=6,
+        address='54 East 64th Street',
+        city='New York',
+        state='New York',
+        name='Heart of Manhattan',
+        description="The Internationally known designer couple who own this house have spent decades creating several masterpiece homes, in both country and urban settings. The original architects, Flagg and Chambers, created a mansion built to grand proportions with beautiful large-scale, high-ceilinged rooms. The current owners have undertaken a gut renovation with the latest mechanical systems artfully hidden, and the massive wide windows afford exceptionally bright sunny interiors.",
+        beds='6',
+        baths='6',
+        price='11500')
     
 
     db.session.add(spot1)
@@ -136,6 +196,13 @@ def seed_spots():
     db.session.add(spot9)
     db.session.add(spot10)
     db.session.add(spot11)
+    db.session.add(spot12)
+    db.session.add(spot13)
+    db.session.add(spot14)
+    db.session.add(spot15)
+    db.session.add(spot16)
+    db.session.add(spot17)
+    db.session.add(spot18)
 
     db.session.commit()
 
