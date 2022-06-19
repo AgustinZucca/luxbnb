@@ -1,6 +1,8 @@
 # LuxBnB
 
 LuxBnB is an app where users are able to host spots on the website.
+Users are also able to leave reviews on spots, by giving a star rating and a comment.
+Features that are coming soon are being able to upload several images per spot and booking a spot.
 
 ##Splash Page
 <img width="1352" alt="Screen Shot 2022-06-18 at 21 59 32" src="https://user-images.githubusercontent.com/95192801/174464052-13707d27-93c5-4b2a-a5dc-3394d570a1ae.png">
