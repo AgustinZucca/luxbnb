@@ -111,7 +111,7 @@ const EditSpot = () => {
             className="imgInputBtn"
           ></input>
         </div>
-        {previewUrl && <img src={previewUrl} className="spotImgPreview"></img>}
+        {previewUrl && <img src={previewUrl} className="spotImgPreviewEdit"></img>}
         <div className="labelInputContainer">
           <label>Address</label>
           <input

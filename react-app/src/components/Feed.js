@@ -17,7 +17,7 @@ const Feed = () => {
   useEffect(async () => {
     await dispatch(fetchAllSpots());
     setIsLoaded(true);
-  }, []);
+  }, [dispatch]);
 
   if (!isLoaded) {
     return (
