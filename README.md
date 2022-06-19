@@ -1,7 +1,13 @@
 # LuxBnB
 
 LuxBnB is an app where users are able to host spots on the website.
+
+##Splash Page
 <img width="1352" alt="Screen Shot 2022-06-18 at 21 59 32" src="https://user-images.githubusercontent.com/95192801/174464052-13707d27-93c5-4b2a-a5dc-3394d570a1ae.png">
+
+## Spot Page
+![singlespotpage](https://user-images.githubusercontent.com/95192801/174502554-9900f016-06d6-4176-9dd2-72b765a59858.png)
+
 
 ## Technologies Used
 
