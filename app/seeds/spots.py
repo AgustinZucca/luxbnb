@@ -34,7 +34,7 @@ def seed_spots():
         baths='7',
         price='5000')
     spot4 = Spot(
-        user_id=3,
+        user_id=4,
         address='683 Ocean Rd',
         city='Southampton',
         state='New York',
@@ -44,7 +44,7 @@ def seed_spots():
         baths='9',
         price='25000')
     spot5 = Spot(
-        user_id=2,
+        user_id=5,
         address='432 Newark Rd',
         city='Southampton',
         state='New Jersey',
@@ -54,7 +54,7 @@ def seed_spots():
         baths='9',
         price='4500')
     spot6 = Spot(
-        user_id=2,
+        user_id=6,
         address='900 Pebble Ln',
         city='Southampton',
         state='New York',
@@ -64,7 +64,7 @@ def seed_spots():
         baths='7',
         price='10000')
     spot7 = Spot(
-        user_id=2,
+        user_id=1,
         address='45 St',
         city='New York',
         state='New York',
@@ -94,7 +94,7 @@ def seed_spots():
         baths='5',
         price='6000')
     spot10 = Spot(
-        user_id=3,
+        user_id=4,
         address='10333 Woodford Dr',
         city='Dallas',
         state='Texas',
@@ -104,7 +104,17 @@ def seed_spots():
         baths='4',
         price='9000')
     spot11 = Spot(
-        user_id=3,
+        user_id=5,
+        address='55 Commercial Wharf #12',
+        city='Boston',
+        state='Massachusetts',
+        name='Boston Lux Aparment',
+        description="Exceptional designer waterfront home. Two combined floor-through units create a rare and coveted floor plan that lives like a single family with the ease of one floor living.  Customized 3 bed 3 bath expands across two wings with 2565 sq ft. Live, entertain and dine in one wing and retreat to a separate primary suite sanctuary in the other.",
+        beds='3',
+        baths='3',
+        price='7000')
+    spot12 = Spot(
+        user_id=6,
         address='55 Commercial Wharf #12',
         city='Boston',
         state='Massachusetts',
