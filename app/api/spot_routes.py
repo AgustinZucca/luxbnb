@@ -103,7 +103,7 @@ def deleteSpot(spotId):
     db.session.delete(spot)
     db.session.commit()
 
-    return
+    return spot
 
 @spot_routes.route("/images/<int:spot_id>", methods=['POST'])
 @login_required
@@ -135,12 +135,10 @@ def add_spot_images(spot_id):
     return {'errors': 'Image upload failed'}
     
 
-@spot_routes.route("/images/<int:img_id>", methods=['DELETE'])
+@spot_routes.route("/images/<int:img_id>/delete", methods=['DELETE'])
 @login_required
 def remove_spot_image(img_id):
     img = Image.query.get(img_id)
-    print('INSIDE DELETE IMG ROUTE \n\n', img)
     db.session.delete(img)
     db.session.commit()
-
-    return
+    return {'message': 'success'}

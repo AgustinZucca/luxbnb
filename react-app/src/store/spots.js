@@ -97,7 +97,7 @@ export const uploadFile = (img_url, spotId) => async (dispatch) => {
 };
 
 export const removeImg = (imgId) => async (dispatch) => {
-  const response = await fetch(`/api/spots/images/${imgId}`, {
+  const response = await fetch(`/api/spots/images/${imgId}/delete`, {
     method: "DELETE"
   })
   if (response.ok) {
