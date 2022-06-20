@@ -29,6 +29,7 @@ const EditSpot = () => {
   const [newImgId, setNewImgId] = useState(spot?.images[0]?.id);
   const [oldImgId, setOldImgId] = useState(spot?.images[0]?.id);
   const [showDelete, setShowDelete] = useState(false)
+  const [hosting, setHosting] = useState(false)
 
   const updateImage = async (e) => {
     const file = e.target.files[0];
@@ -51,6 +52,7 @@ const EditSpot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setHosting(true)
     const spot = {
       address: address,
       city: city,
@@ -68,6 +70,7 @@ const EditSpot = () => {
     }
     if (newSpot?.errors) {
       setErrors(newSpot?.errors);
+      setHosting(false)
     } else {
       history.push(`/spots/${newSpot?.id}`);
     }
@@ -251,7 +254,12 @@ const EditSpot = () => {
           </div>
         </div>
         <div className="editButtonsContainer">
-          <button className="hostSpotButton" >Edit Spot</button>
+         {hosting && (
+          <button className="hostSpotButton" disabled={true}>Hosting...</button>
+         )}
+         {!hosting && (
+           <button className="hostSpotButton" >Edit Spot</button>
+         )}
           <div className="deleteSpotButton" onClick={() => setShowDelete(true)}>Delete</div>
         </div>
       </form>
