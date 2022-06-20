@@ -8,16 +8,16 @@ import "./css/feed.css";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.session.user);
   const history = useHistory();
+  const user = useSelector((state) => state.session.user);
   const spots = useSelector((state) => state?.spots?.allSpots?.spots);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(async () => {
-    await dispatch(fetchAllSpots());
-    setIsLoaded(true);
-  }, [dispatch]);
+    dispatch(fetchAllSpots()).then(() => setIsLoaded(true));
+  }, []);
 
   if (!isLoaded) {
     return (
