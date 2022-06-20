@@ -18,10 +18,10 @@ const CreateSpot = () => {
   const [baths, setBaths] = useState(0);
   const [price, setPrice] = useState(0);
   const [errors, setErrors] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [imgUrl, setImgUrl] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [imgUrl, setImgUrl] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(false);
-  const [hosting, setHosting] = useState(false)
+  const [hosting, setHosting] = useState(false);
   // const allSpots = spots[spots?.length - 1];
   // const lastSpotId = allSpots[allSpots.length - 1].id;
 
@@ -46,13 +46,13 @@ const CreateSpot = () => {
       };
       setImgUrl(file);
     } else {
-      setPreviewUrl(false)
+      setPreviewUrl(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setHosting(true)
+    setHosting(true);
     const spot = {
       address: address,
       city: city,
@@ -65,11 +65,12 @@ const CreateSpot = () => {
       userId: user.id,
     };
 
-
     const newSpot = await dispatch(createSpot(spot));
-    const imageUpload = await dispatch(uploadFile(imgUrl, newSpot.id))
+    if (newSpot.id) {
+      const imageUpload = await dispatch(uploadFile(imgUrl, newSpot.id));
+    }
     if (newSpot.errors) {
-      setHosting(false)
+      setHosting(false);
       window.scrollTo(0, 0);
       setErrors(newSpot.errors);
     } else {
@@ -88,19 +89,15 @@ const CreateSpot = () => {
     // }
   };
 
-  // if (!isLoaded) {
-  //   return (
-  //     <img src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"></img>
-  //   )
-  // }
-
   return (
     <div className="createSpotPage">
       <form onSubmit={(e) => handleSubmit(e)} className="createSpotForm">
         <h2>Host a Spot on LuxBnB</h2>
         <div>
           {errors.map((error, ind) => (
-            <div key={ind} className='createSpotErrors'>{error}</div>
+            <div key={ind} className="createSpotErrors">
+              {error}
+            </div>
           ))}
         </div>
         <div className="labelInputContainerImage">
@@ -264,12 +261,11 @@ const CreateSpot = () => {
           </div>
         </div>
         {hosting && (
-          <button className="hostingSpotButton" disabled>Hosting...</button>
+          <button className="hostingSpotButton" disabled>
+            Hosting...
+          </button>
         )}
-        {!hosting && (
-
-        <button className="hostSpotButton">Host Spot</button>
-        )}
+        {!hosting && <button className="hostSpotButton">Host Spot</button>}
       </form>
     </div>
   );

@@ -28,8 +28,8 @@ const EditSpot = () => {
   const [newImg, setNewImg] = useState();
   const [newImgId, setNewImgId] = useState(spot?.images[0]?.id);
   const [oldImgId, setOldImgId] = useState(spot?.images[0]?.id);
-  const [showDelete, setShowDelete] = useState(false)
-  const [hosting, setHosting] = useState(false)
+  const [showDelete, setShowDelete] = useState(false);
+  const [hosting, setHosting] = useState(false);
 
   const updateImage = async (e) => {
     const file = e.target.files[0];
@@ -52,7 +52,7 @@ const EditSpot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setHosting(true)
+    setHosting(true);
     const spot = {
       address: address,
       city: city,
@@ -64,16 +64,18 @@ const EditSpot = () => {
       price: price,
     };
     const newSpot = await dispatch(updateSpot(spotId, spot));
-    if (newImgId !== oldImgId) {
-      const deleteImg = await dispatch(removeImg(oldImgId));
-      const imageUpload = await dispatch(uploadFile(newImg, newSpot.id));
-    }
-    if (newSpot?.errors) {
-      setErrors(newSpot?.errors);
-      setHosting(false)
+    if (newSpot.id) {
+      if (newImgId !== oldImgId) {
+        const deleteImg = await dispatch(removeImg(oldImgId));
+        console.log('IN MIDDLE OF DELETE AND IMAGE UPLOAD')
+        const imageUpload = await dispatch(uploadFile(newImg, spotId));
+      }
+      return history.push(`/spots/${spotId}`);
     } else {
-      history.push(`/spots/${newSpot?.id}`);
+      setErrors(newSpot);
+      setHosting(false);
     }
+    return
   };
 
   const handleDeleteSpot = () => {
@@ -81,19 +83,31 @@ const EditSpot = () => {
     history.push("/");
   };
 
-  // if (isLoaded) {
+
   return (
     <div className="createSpotPageEdit">
       {showDelete && (
         <>
-        <div className="modalBkg" onClick={() => setShowDelete(false)}></div>
-        <div className="deleteModal">
-          <div style={{ fontSize: "20px", marginBottom: '10px' }}>Deleting Spot</div>
-          <div>Are you sure you want to delete this spot?</div>
-          <div className="deleteModalButtons">
-            <div className="cancelButton" onClick={() => setShowDelete(false)}>Cancel</div>
-            <div className="deleteButtonFINAL" onClick={() => handleDeleteSpot()}>Delete</div>
-          </div>
+          <div className="modalBkg" onClick={() => setShowDelete(false)}></div>
+          <div className="deleteModal">
+            <div style={{ fontSize: "20px", marginBottom: "10px" }}>
+              Deleting Spot
+            </div>
+            <div>Are you sure you want to delete this spot?</div>
+            <div className="deleteModalButtons">
+              <div
+                className="cancelButton"
+                onClick={() => setShowDelete(false)}
+              >
+                Cancel
+              </div>
+              <div
+                className="deleteButtonFINAL"
+                onClick={() => handleDeleteSpot()}
+              >
+                Delete
+              </div>
+            </div>
           </div>
         </>
       )}
@@ -101,7 +115,7 @@ const EditSpot = () => {
         <h2>Edit your spot</h2>
         <div>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div key={ind} className="createSpotErrors">{error}</div>
           ))}
         </div>
         <div>
@@ -114,7 +128,9 @@ const EditSpot = () => {
             className="imgInputBtn"
           ></input>
         </div>
-        {previewUrl && <img src={previewUrl} className="spotImgPreviewEdit"></img>}
+        {previewUrl && (
+          <img src={previewUrl} className="spotImgPreviewEdit"></img>
+        )}
         <div className="labelInputContainer">
           <label>Address</label>
           <input
@@ -254,13 +270,15 @@ const EditSpot = () => {
           </div>
         </div>
         <div className="editButtonsContainer">
-         {hosting && (
-          <button className="hostSpotButton" disabled={true}>Hosting...</button>
-         )}
-         {!hosting && (
-           <button className="hostSpotButton" >Edit Spot</button>
-         )}
-          <div className="deleteSpotButton" onClick={() => setShowDelete(true)}>Delete</div>
+          {hosting && (
+            <button className="hostSpotButton" disabled={true}>
+              Hosting...
+            </button>
+          )}
+          {!hosting && <button className="hostSpotButton">Edit Spot</button>}
+          <div className="deleteSpotButton" onClick={() => setShowDelete(true)}>
+            Delete
+          </div>
         </div>
       </form>
     </div>
