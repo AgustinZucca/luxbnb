@@ -18,15 +18,16 @@ def user_bookings(userId):
 
 
 # post a booking
-@booking_routes.route("/", methods=["POST"])
+@booking_routes.route("/new", methods=["POST"])
 @login_required
 def add_booking():
     form = NewBookingForm()
-
+    print(form.data)
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
         data = form.data
+        print(data)
         booking = Booking(
             user_id=data["user_id"],
             spot_id=data["spot_id"],

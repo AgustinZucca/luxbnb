@@ -9,6 +9,7 @@ import LoginForm from "./auth/LoginForm";
 import SignUpForm from "./auth/SignUpForm";
 import logoIcon from '../images/Luxbnb_Logo-removebg-preview.png';
 import hostSpot from '../images/hostSpot.jpeg'
+import bookings from '../images/booking.png'
 
 
 const NavBar = () => {
@@ -115,6 +116,20 @@ const NavBar = () => {
                           className="hostSpotIcon"
                         />
                         Host Spot
+                      </div>
+                    </NavLink>
+                    <NavLink
+                      to="/spots/new"
+                      exact={true}
+                      activeClassName="active"
+                      className={"navbarLinks1"}
+                    >
+                      <div>
+                        <img
+                          src={bookings}
+                          className="hostSpotIcon"
+                        />
+                        Bookings
                       </div>
                     </NavLink>
                     <NavLink

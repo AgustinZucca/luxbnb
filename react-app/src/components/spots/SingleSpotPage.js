@@ -20,6 +20,7 @@ import {
 } from "../Navicons";
 import DatePicker from "react-calendar";
 import "../css/calendar.css";
+import { createBooking } from "../../store/bookings";
 
 const SingleSpot = () => {
   const history = useHistory();
@@ -51,6 +52,13 @@ const SingleSpot = () => {
 
   const handleBooking = (e) => {
     e.preventDefault()
+    const booking ={
+      user_id: user.id,
+      spot_id: spot.id,
+      check_in: date[0].toISOString().split("T")[0],
+      check_out: date[1].toISOString().split("T")[0]
+    }
+    dispatch(createBooking(booking))
   };
 
   useEffect(async () => {
@@ -284,7 +292,7 @@ const SingleSpot = () => {
             <div className="bookingContainer">
               <div className="upperBooking">
                 <div>${spot?.price} /night</div>
-                {avgRating !== 0 && (
+                {avgRating !== 0 && !isNaN(avgRating) && (
                   <div className="smallRating">
                     <div>{avgRating / 20} </div>
                     {littleStar}
