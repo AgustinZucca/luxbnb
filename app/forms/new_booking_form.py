@@ -8,3 +8,4 @@ class NewBookingForm(FlaskForm):
     spot_id = IntegerField("spot_id", validators=[DataRequired()])
     check_in = DateField("check_in", validators=[DataRequired()])
     check_out = DateField("check_out", validators=[DataRequired()])
+    nights = IntegerField("nights", validators=[DataRequired()])

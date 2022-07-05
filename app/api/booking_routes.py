@@ -9,7 +9,7 @@ booking_routes = Blueprint("bookings", __name__)
 
 
 # get all upcoming bookings for a user
-@booking_routes.route("/user/<int:userId>")
+@booking_routes.route("/<int:userId>")
 @login_required
 def user_bookings(userId):
     bookings = Booking.query.filter(Booking.user_id == userId).all()
@@ -17,7 +17,7 @@ def user_bookings(userId):
     return {"bookings": res}
 
 
-# post a booking
+# Create a booking
 @booking_routes.route("/new", methods=["POST"])
 @login_required
 def add_booking():
@@ -33,6 +33,7 @@ def add_booking():
             spot_id=data["spot_id"],
             check_in=data["check_in"],
             check_out=data["check_out"],
+            nights=data["nights"]
         )
 
         db.session.add(booking)

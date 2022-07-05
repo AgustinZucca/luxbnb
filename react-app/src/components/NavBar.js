@@ -119,7 +119,7 @@ const NavBar = () => {
                       </div>
                     </NavLink>
                     <NavLink
-                      to="/spots/new"
+                      to={`/users/${user.id}/bookings`}
                       exact={true}
                       activeClassName="active"
                       className={"navbarLinks1"}

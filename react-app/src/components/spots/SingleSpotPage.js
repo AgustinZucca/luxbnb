@@ -51,14 +51,15 @@ const SingleSpot = () => {
   };
 
   const handleBooking = (e) => {
-    e.preventDefault()
-    const booking ={
+    e.preventDefault();
+    const booking = {
       user_id: user.id,
       spot_id: spot.id,
       check_in: date[0].toISOString().split("T")[0],
-      check_out: date[1].toISOString().split("T")[0]
-    }
-    dispatch(createBooking(booking))
+      check_out: date[1].toISOString().split("T")[0],
+      nights: nightsTotal(date[0], date[1])
+    };
+    dispatch(createBooking(booking));
   };
 
   useEffect(async () => {
@@ -98,6 +99,20 @@ const SingleSpot = () => {
 
       return newReview;
     }
+  };
+
+  const priceTotal = (date1, date2) => {
+    let oned = 24 * 60 * 60 * 1000;
+    const days = Math.ceil((date2 - date1) / oned);
+
+    return (spot?.price * days).toLocaleString('en-US');
+  };
+  
+  const nightsTotal = (date1, date2) => {
+    let oned = 24 * 60 * 60 * 1000;
+    const days = Math.ceil((date2 - date1) / oned);
+
+    return days - 1;
   };
 
   const editReview = (review) => {
@@ -311,10 +326,22 @@ const SingleSpot = () => {
                   selectRange={true}
                   tileDisabled={({ date }) => date < new Date()}
                 />
-                {date ? 
-                  <button className="bookingButton">Reserve</button> : <button disabled={true} className="bookingButtonDisabled">Reserve</button>}
+                {date ? (
+                  <>
+                    <div className="total">
+                      Total Nights: {nightsTotal(date[0], date[1])}
+                    </div>
+                    <div className="total">
+                      Total before tax: ${priceTotal(date[0], date[1])}
+                    </div>
+                    <button className="bookingButton">Reserve</button>
+                  </>
+                ) : (
+                  <button disabled={true} className="bookingButtonDisabled">
+                    Reserve
+                  </button>
+                )}
               </form>
-              {date ? <div></div> : <div></div>}
             </div>
           </div>
         </div>

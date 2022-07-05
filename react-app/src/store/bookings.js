@@ -1,4 +1,5 @@
 const CREATE_BOOKING = "bookings/CREATE_BOOKING";
+const GET_BOOKINGS = "bookings/GET_BOOKINGS";
 const DELETE_BOOKING = "bookings/DELETE_BOOKING";
 
 const newBooking = (booking) => ({
@@ -10,6 +11,22 @@ const delBooking = (booking) => ({
   type: DELETE_BOOKING,
   payload: booking,
 });
+
+const getBookings = (bookings) => ({
+    type: GET_BOOKINGS,
+    payload: bookings
+})
+
+export const getUserBookings = (userId) => async (dispatch) => {
+    const response = await fetch(`/api/bookings/${userId}`)
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getBookings(data));
+        return data;
+      } else {
+        return ["An error occurred. Please try again."];
+      }
+}
 
 export const createBooking = (booking) => async (dispatch) => {
   const response = await fetch("/api/bookings/new", {
@@ -36,6 +53,8 @@ export const createBooking = (booking) => async (dispatch) => {
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
+    case GET_BOOKINGS:
+        return action.payload
     default:
       return state;
   }

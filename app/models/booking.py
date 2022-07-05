@@ -8,6 +8,7 @@ class Booking(db.Model):
     spot_id = db.Column(db.Integer, db.ForeignKey("spots.id"), nullable=False) 
     check_in = db.Column(db.Date, nullable=False)
     check_out = db.Column(db.Date, nullable=False)
+    nights = db.Column(db.Integer, nullable=False)
 
     user = db.relationship("User", back_populates="bookings")
     spot = db.relationship("Spot", back_populates="bookings")
@@ -20,5 +21,6 @@ class Booking(db.Model):
             "spot_id": self.spot_id,
             "spot": self.spot.to_dict(),
             "check_in": self.check_in,
-            "check_out": self.check_out
+            "check_out": self.check_out,
+            "nights": self.nights
         }

@@ -14,6 +14,8 @@ import EditSpot from './components/spots/EditSpot';
 import Feed from './components/Feed';
 import AboutMe from './components/Aboutme';
 import Footer from './components/Footer';
+import UserBookings from './components/UserBookings';
+
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -40,6 +42,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
+        </ProtectedRoute>
+        <ProtectedRoute path='/users/:userId/bookings' exact={true} >
+          <UserBookings />
         </ProtectedRoute>
         <ProtectedRoute path='/spots/new' exact={true} >
           <CreateSpot />
