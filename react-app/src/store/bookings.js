@@ -17,6 +17,22 @@ const getBookings = (bookings) => ({
     payload: bookings
 })
 
+export const deleteBooking = (bookingId) => async (dispatch) => {
+    const response = await fetch(`/api/bookings/${bookingId}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+          }
+    })
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getBookings(data));
+        return data;
+      } else {
+        return ["An error occurred. Please try again."];
+      }
+}
+
 export const getUserBookings = (userId) => async (dispatch) => {
     const response = await fetch(`/api/bookings/${userId}`)
     if (response.ok) {

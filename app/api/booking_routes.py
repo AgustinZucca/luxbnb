@@ -48,7 +48,10 @@ def add_booking():
 @login_required
 def delete_booking(bookingId):
     booking = Booking.query.filter(Booking.id == bookingId).first()
+    print(booking)
     if booking:
         db.session.delete(booking)
         db.session.commit()
         return {"id": booking.id}
+    return {"errors": booking}, 401
+    

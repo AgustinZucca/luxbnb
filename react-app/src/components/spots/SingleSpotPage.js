@@ -21,6 +21,8 @@ import {
 import DatePicker from "react-calendar";
 import "../css/calendar.css";
 import { createBooking } from "../../store/bookings";
+import { format, addDays, subDays } from "date-fns";
+
 
 const SingleSpot = () => {
   const history = useHistory();
@@ -37,7 +39,8 @@ const SingleSpot = () => {
   const [reviewErr, setReviewErr] = useState();
   const [avgRating, setAvgRating] = useState(0);
   const [date, setDate] = useState(null);
-  console.log(date);
+  const [succBook, setSuccBook] = useState(false);
+
 
   const ratingAvg = async () => {
     let total = 0;
@@ -52,18 +55,22 @@ const SingleSpot = () => {
 
   const handleBooking = (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0)
     const booking = {
       user_id: user.id,
       spot_id: spot.id,
       check_in: date[0].toISOString().split("T")[0],
       check_out: date[1].toISOString().split("T")[0],
-      nights: nightsTotal(date[0], date[1])
+      nights: nightsTotal(date[0], date[1]),
     };
     dispatch(createBooking(booking));
+    setSuccBook(true);
+    setTimeout(() => history.push(`/users/${user.id}/bookings`), 2000);
   };
 
   useEffect(async () => {
     await dispatch(fetchSpot(spotId));
+    window.scrollTo(0, 0)
     setIsLoaded(true);
   }, [count]);
 
@@ -74,6 +81,9 @@ const SingleSpot = () => {
   const editSpot = () => {
     history.push(`/spots/${spot?.id}/edit`);
   };
+
+  const blockedDates = [new Date(2022, 6, 8)];
+  console.log(new Date());
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -105,9 +115,9 @@ const SingleSpot = () => {
     let oned = 24 * 60 * 60 * 1000;
     const days = Math.ceil((date2 - date1) / oned);
 
-    return (spot?.price * days).toLocaleString('en-US');
+    return (spot?.price * days).toLocaleString("en-US");
   };
-  
+
   const nightsTotal = (date1, date2) => {
     let oned = 24 * 60 * 60 * 1000;
     const days = Math.ceil((date2 - date1) / oned);
@@ -140,6 +150,15 @@ const SingleSpot = () => {
 
   return (
     <>
+      {succBook && (
+        <div className="successfulBooking">
+          <div className="bookingMsg">
+            <h2>Successful Booking</h2>
+            <img src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif" className="redirectBookImg"></img>
+            <h3 className="redirectBook">Redirecting to your bookings</h3>
+          </div>
+        </div>
+      )}
       {editing && (
         <EditReview
           currReview={currReview}
@@ -325,6 +344,7 @@ const SingleSpot = () => {
                   returnValue="range"
                   selectRange={true}
                   tileDisabled={({ date }) => date < new Date()}
+                  isValidDate={blockedDates}
                 />
                 {date ? (
                   <>

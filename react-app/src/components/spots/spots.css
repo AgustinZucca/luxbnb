@@ -67,6 +67,40 @@
   cursor: pointer;
 }
 
+.successfulBooking {
+  position: absolute;
+  overflow-y: hidden;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 56;
+  background-color: #7474742d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bookingMsg {
+  background-color: white;
+  width: 400px;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+}
+
+.redirectBookImg {
+  height: 100px;
+}
+
+.redirectBook {
+  margin: 0;
+}
+
 .bookingButtonDisabled {
   width: 100%;
   border: 0;

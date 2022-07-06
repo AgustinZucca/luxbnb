@@ -24,3 +24,9 @@ class Booking(db.Model):
             "check_out": self.check_out,
             "nights": self.nights
         }
+
+    def booking_info(self):
+        return {
+            'check_in': self.check_in,
+            'check_out': self.check_out
+        }
