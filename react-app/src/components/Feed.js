@@ -17,7 +17,8 @@ const Feed = () => {
   
   useEffect(async () => {
     dispatch(fetchAllSpots()).then(() => setIsLoaded(true));
-  }, []);
+    window.scrollTo(0, 0)
+  }, [isLoaded]);
 
   if (!isLoaded) {
     return (

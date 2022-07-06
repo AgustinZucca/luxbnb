@@ -20,6 +20,7 @@ class Spot(db.Model):
     user = db.relationship('User', back_populates='spots')
     reviews = db.relationship('Review', back_populates='spot', cascade='all, delete')
     images = db.relationship('Image', back_populates='spot', cascade='all, delete')
+    bookings = db.relationship('Booking', back_populates='spot', cascade='all, delete')
 
     def to_dict(self):
         return {
@@ -28,6 +29,7 @@ class Spot(db.Model):
             'user': self.user.to_dict(),
             'reviews': [review.to_dict() for review in self.reviews],
             'images': [image.to_dict() for image in self.images],
+            'bookings': [booking.booking_info() for booking in self.bookings],
             'address': self.address,
             'city': self.city,
             'state': self.state,
