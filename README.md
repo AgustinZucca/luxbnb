@@ -1,8 +1,8 @@
 # LuxBnB
 
-LuxBnB is an app where users are able to host spots on the website.
+LuxBnB is an app where users are able to host spots and book spots on the website.
 Users are also able to leave reviews on spots, by giving a star rating and a comment.
-Features that are coming soon are being able to upload several images per spot and booking a spot.
+Features that are coming soon are being able to upload several images per spot.
 
 ## Live Link
 https://luxbnbclone.herokuapp.com/
