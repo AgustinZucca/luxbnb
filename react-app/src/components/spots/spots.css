@@ -12,6 +12,10 @@
   z-index: -1;
 }
 
+.total {
+  margin-top: 10px;
+}
+
 .spotPicture {
   width: 100%;
   height: 90%;
@@ -22,11 +26,92 @@
   margin-top: 20px;
   width: 100%;
   height: fit-content;
+  display: flex;
+  justify-content: space-between;
 }
 
 .lowerLeftSpotPage {
-  width: 100%;
+  width: 70%;
 }
+
+.lowerRightSpotPage {
+  width: 28%;
+}
+
+.bookingContainer {
+  border: .5px solid rgba(0, 0, 0, 0.498);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.upperBooking {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.smallRating {
+  display: flex;
+  align-items: center;
+}
+
+.bookingButton {
+  width: 100%;
+  border: 0;
+  background-color: #eb4c60;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.successfulBooking {
+  position: absolute;
+  overflow-y: hidden;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 56;
+  background-color: #7474742d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bookingMsg {
+  background-color: white;
+  width: 400px;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+}
+
+.redirectBookImg {
+  height: 100px;
+}
+
+.redirectBook {
+  margin: 0;
+}
+
+.bookingButtonDisabled {
+  width: 100%;
+  border: 0;
+  background-color: #747474;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
 
 .hostInfo {
   padding: 30px 0px;
@@ -184,8 +269,8 @@
 
 /*CREATE SPOT PAGE CSS*/
 .createSpotPage {
-padding-top: 100px;
-padding-bottom: 300px;
+  padding-top: 100px;
+  padding-bottom: 300px;
   display: flex;
   height: 100vh;
   width: 100vw;
@@ -239,7 +324,7 @@ padding-bottom: 300px;
   color: white;
   padding: 15px;
   border-radius: 5px;
-  transition: .5s;
+  transition: 0.5s;
   cursor: pointer;
 }
 
@@ -249,7 +334,7 @@ padding-bottom: 300px;
   color: white;
   padding: 15px;
   border-radius: 5px;
-  transition: .5s;
+  transition: 0.5s;
   cursor: pointer;
 }
 
@@ -290,7 +375,7 @@ input[type="file" i] {
   cursor: pointer;
 }
 
-input[type=file]::file-selector-button {
+input[type="file"]::file-selector-button {
   border: 0;
   background-color: #eb4c60;
   padding: 10px;
@@ -307,18 +392,17 @@ input[type=file]::file-selector-button {
   margin: 15px 0px;
 }
 
-
 /* EDIT/DELETE SPOT */
 .createSpotPageEdit {
   padding-top: 100px;
   padding-bottom: 300px;
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    justify-content: center;
-  }
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  justify-content: center;
+}
 
 .editButtonsContainer {
   display: flex;
@@ -338,7 +422,7 @@ input[type=file]::file-selector-button {
   border: 1px solid red;
   color: white;
   border-radius: 5px;
-  background-color:#f72440;
+  background-color: #f72440;
   padding: 15px;
   width: fit-content;
   cursor: pointer;
@@ -399,7 +483,7 @@ input[type=file]::file-selector-button {
 
 .cancelButton {
   padding: 5px;
-  border: .5px solid rgba(0, 0, 0, 0.416);
+  border: 0.5px solid rgba(0, 0, 0, 0.416);
   border-radius: 5px;
   margin-right: 15px;
   cursor: pointer;
@@ -417,5 +501,3 @@ input[type=file]::file-selector-button {
   color: #f72440;
   padding-bottom: 5px;
 }
-
-

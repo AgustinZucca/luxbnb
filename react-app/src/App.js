@@ -14,6 +14,8 @@ import EditSpot from './components/spots/EditSpot';
 import Feed from './components/Feed';
 import AboutMe from './components/Aboutme';
 import Footer from './components/Footer';
+import UserBookings from './components/UserBookings';
+
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -35,17 +37,14 @@ function App() {
       <NavBar />
       <Footer />
       <Switch>
-        {/* <Route path='/login' exact={true}>
-          <LoginForm />
-        </Route>
-        <Route path='/sign-up' exact={true}>
-          <SignUpForm />
-        </Route> */}
         <ProtectedRoute path='/users' exact={true} >
           <UsersList/>
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
+        </ProtectedRoute>
+        <ProtectedRoute path='/users/:userId/bookings' exact={true} >
+          <UserBookings />
         </ProtectedRoute>
         <ProtectedRoute path='/spots/new' exact={true} >
           <CreateSpot />
