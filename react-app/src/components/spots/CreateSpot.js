@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSpot, uploadFile, fetchAllSpots } from "../../store/spots";
+import ImageUploading from "react-images-uploading";
 
 const CreateSpot = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const CreateSpot = () => {
   const [imgUrl, setImgUrl] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(false);
   const [hosting, setHosting] = useState(false);
+  const [images, setImages] = useState([]);
   // const allSpots = spots[spots?.length - 1];
   // const lastSpotId = allSpots[allSpots.length - 1].id;
 
@@ -36,17 +38,26 @@ const CreateSpot = () => {
   //   setIsLoaded(true)
   // }, [dispatch])
 
-  const updateImage = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function (e) {
-        setPreviewUrl(reader.result);
-      };
+  // const updateImage = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = function (e) {
+  //       setPreviewUrl(reader.result);
+  //     };
+  //     setImgUrl(file);
+  //   } else {
+  //     setPreviewUrl(false);
+  //   }
+  // };
+  const addImages = async (images, spotId) => {
+    for (let i = 0; i < images.length; i++) {
+      const file = images[i]
+      console.log(file)
       setImgUrl(file);
-    } else {
-      setPreviewUrl(false);
+
+      await dispatch(uploadFile(imgUrl, spotId));
     }
   };
 
@@ -67,7 +78,7 @@ const CreateSpot = () => {
 
     const newSpot = await dispatch(createSpot(spot));
     if (newSpot.id) {
-      const imageUpload = await dispatch(uploadFile(imgUrl, newSpot.id));
+      await addImages(images, newSpot.id)
     }
     if (newSpot.errors) {
       setHosting(false);
@@ -76,17 +87,6 @@ const CreateSpot = () => {
     } else {
       history.push(`/spots/${newSpot.id}`);
     }
-    // const imageUpload = await dispatch(uploadFile(imgUrl, (lastSpotId+1)));
-    // if (imageUpload.errors) {
-    //   setErrors(imageUpload.errors);
-    // } else {
-    //   const newSpot = await dispatch(createSpot(spot));
-    //   if (newSpot.errors) {
-    //     setErrors(newSpot.errors);
-    //   } else {
-    //     history.push(`/spots/${newSpot.id}`);
-    //   }
-    // }
   };
 
   return (
@@ -100,7 +100,7 @@ const CreateSpot = () => {
             </div>
           ))}
         </div>
-        <div className="labelInputContainerImage">
+        {/* <div className="labelInputContainerImage">
           <label>Image</label>
           <input
             type="file"
@@ -110,17 +110,65 @@ const CreateSpot = () => {
             required
           ></input>
         </div>
-        {previewUrl && <img src={previewUrl} className="spotImgPreview"></img>}
-        {/* <div className="labelInputContainer">
-          <label>Image</label>
-          <input
-            type="text"
-            placeholder="Image Url"
-            value={image}
-            required
-            onChange={(e) => setImage(e.target.value)}
-          />
-        </div> */}
+        {previewUrl && <img src={previewUrl} className="spotImgPreview"></img>} */}
+
+        <ImageUploading
+          multiple
+          value={images}
+          onChange={(imageList) => setImages(imageList)}
+          maxNumber={5}
+          dataURLKey="data_url"
+          acceptType={["jpg", "png", "jpeg"]}
+        >
+          {({
+            imageList,
+            onImageUpload,
+            onImageUpdate,
+            onImageRemove,
+            isDragging,
+            dragProps,
+          }) => (
+            <div className="upload__image-wrapper">
+              <div
+                style={isDragging ? { color: "rgb(255, 56, 92)" } : undefined}
+                onClick={onImageUpload}
+                {...dragProps}
+                className="add_images_container"
+              >
+                Click or Drag Up To 5 Images Here
+              </div>
+              {/* <div onClick={onImageRemoveAll}>Remove all images</div> */}
+              {imageList.length >= 1 && (
+                <div className="images_container">
+                  {imageList.map((image, index) => (
+                    <div key={index}>
+                      <img
+                        src={image["data_url"]}
+                        alt=""
+                        className="previewImg"
+                      />
+                      <div className="editPhotoButtons">
+                        <div
+                          className="change_image"
+                          onClick={() => onImageUpdate(index)}
+                        >
+                          Change
+                        </div>
+                        <div
+                          className="remove_image"
+                          onClick={() => onImageRemove(index)}
+                        >
+                          Remove
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </ImageUploading>
+
         <div className="labelInputContainer">
           <label>Address</label>
           <input
@@ -159,7 +207,7 @@ const CreateSpot = () => {
             <option value="Colorado">Colorado</option>
             <option value="Connecticut">Connecticut</option>
             <option value="Delaware">Delaware</option>
-            <option value="District Of Columbia">District Of Columbia</option>
+            <option value="District of Columbia">District of Columbia</option>
             <option value="Florida">Florida</option>
             <option value="Georgia">Georgia</option>
             <option value="Hawaii">Hawaii</option>

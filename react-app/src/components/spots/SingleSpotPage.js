@@ -82,8 +82,8 @@ const SingleSpot = () => {
     history.push(`/spots/${spot?.id}/edit`);
   };
 
-  const blockedDates = [new Date(2022, 6, 8)];
-  console.log(new Date());
+  // const blockedDates = [new Date(2022, 6, 8)];
+  // console.log(new Date());
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -99,7 +99,6 @@ const SingleSpot = () => {
     };
     const newReview = await dispatch(createReview(fullReview));
     setCount(count + 1);
-    console.log(newReview);
     if (newReview.errors) {
       setReviewErr(true);
     } else {
@@ -122,7 +121,7 @@ const SingleSpot = () => {
     let oned = 24 * 60 * 60 * 1000;
     const days = Math.ceil((date2 - date1) / oned);
 
-    return days - 1;
+    return days;
   };
 
   const editReview = (review) => {
@@ -344,7 +343,6 @@ const SingleSpot = () => {
                   returnValue="range"
                   selectRange={true}
                   tileDisabled={({ date }) => date < new Date()}
-                  isValidDate={blockedDates}
                 />
                 {date ? (
                   <>
