@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSpot, uploadFile, fetchAllSpots } from "../../store/spots";
+import { createSpot, uploadFile } from "../../store/spots";
 import ImageUploading from "react-images-uploading";
 
 const CreateSpot = () => {
@@ -24,6 +24,7 @@ const CreateSpot = () => {
   const [previewUrl, setPreviewUrl] = useState(false);
   const [hosting, setHosting] = useState(false);
   const [images, setImages] = useState([]);
+
   // const allSpots = spots[spots?.length - 1];
   // const lastSpotId = allSpots[allSpots.length - 1].id;
 
@@ -53,11 +54,9 @@ const CreateSpot = () => {
   // };
   const addImages = async (images, spotId) => {
     for (let i = 0; i < images.length; i++) {
-      const file = images[i]
-      console.log(file)
-      setImgUrl(file);
+      const file = images[i].file
 
-      await dispatch(uploadFile(imgUrl, spotId));
+      await dispatch(uploadFile(file, spotId));
     }
   };
 

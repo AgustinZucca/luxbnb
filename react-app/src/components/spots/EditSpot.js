@@ -8,6 +8,8 @@ import {
   uploadFile,
   removeImg,
 } from "../../store/spots";
+import ImageUploading from "react-images-uploading";
+
 
 const EditSpot = () => {
   const spot = useSelector((state) => state?.spots?.spot);
@@ -30,21 +32,25 @@ const EditSpot = () => {
   const [oldImgId, setOldImgId] = useState(spot?.images[0]?.id);
   const [showDelete, setShowDelete] = useState(false);
   const [hosting, setHosting] = useState(false);
-
-  const updateImage = async (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function (e) {
-      setPreviewUrl(reader.result);
-    };
-    setNewImgId(newImgId + 1);
-    setNewImg(file);
-  };
+  const [images, setImages] = useState('')
+  console.log(images)
+  // const updateImage = async (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = function (e) {
+  //     setPreviewUrl(reader.result);
+  //   };
+  //   setNewImgId(newImgId + 1);
+  //   setNewImg(file);
+  // };
 
   useEffect(async () => {
     dispatch(fetchSpot(spotId));
-
+    let images = spot?.images.map((image) => {
+      return { data_url: image }; 
+    })
+    setImages(images)
     if (spot) {
       setIsLoaded(true);
     }
@@ -118,6 +124,62 @@ const EditSpot = () => {
             <div key={ind} className="createSpotErrors">{error}</div>
           ))}
         </div>
+        <ImageUploading
+          multiple
+          value={images}
+          onChange={(imageList) => setImages(imageList)}
+          maxNumber={5}
+          dataURLKey="data_url"
+          acceptType={["jpg", "png", "jpeg"]}
+        >
+          {({
+            imageList,
+            onImageUpload,
+            onImageUpdate,
+            onImageRemove,
+            isDragging,
+            dragProps,
+          }) => (
+            <div className="upload__image-wrapper">
+              <div
+                style={isDragging ? { color: "rgb(255, 56, 92)" } : undefined}
+                onClick={onImageUpload}
+                {...dragProps}
+                className="add_images_container"
+              >
+                Click or Drag Up To 5 Images Here
+              </div>
+              {/* <div onClick={onImageRemoveAll}>Remove all images</div> */}
+              {imageList.length >= 1 && (
+                <div className="images_container">
+                  {imageList.map((image, index) => (
+                    <div key={index}>
+                      <img
+                        src={image["data_url"]}
+                        alt=""
+                        className="previewImg"
+                      />
+                      <div className="editPhotoButtons">
+                        <div
+                          className="change_image"
+                          onClick={() => onImageUpdate(index)}
+                        >
+                          Change
+                        </div>
+                        <div
+                          className="remove_image"
+                          onClick={() => onImageRemove(index)}
+                        >
+                          Remove
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </ImageUploading>
         <div>
           <label>Image</label>
           <input
