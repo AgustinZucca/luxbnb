@@ -5,7 +5,9 @@
 
 .spotPicturesContainer {
   width: 100%;
-  height: 400px;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
 }
 
 .avgRatingStars {
@@ -16,10 +18,60 @@
   margin-top: 10px;
 }
 
-.spotPicture {
+.spotPictureOne {
   width: 100%;
   height: 90%;
   object-fit: cover;
+}
+
+.spotPicture {
+  width: 69%;
+  height: 90%;
+  object-fit: cover;
+}
+
+.spotPictureSideTwo {
+  width: 30%;
+}
+
+.spotPictureSideTwoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.spotPictureSideThree {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.spotPictureSideThreeImg {
+  width: 100%;
+  height: 49%;
+  object-fit: cover;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.imageSliderModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageSliderModalBkg {
+  position:absolute;
+  top: 0;
+  left: 0;
 }
 
 .lowerSpotPage {
@@ -395,9 +447,9 @@ input[type="file"]::file-selector-button {
 /* EDIT/DELETE SPOT */
 .createSpotPageEdit {
   padding-top: 100px;
-  padding-bottom: 300px;
+  padding-bottom: 100px;
   display: flex;
-  height: 100vh;
+  height: fit-content;
   width: 100vw;
   overflow-x: hidden;
   overflow-y: hidden;

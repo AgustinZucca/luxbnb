@@ -33,7 +33,8 @@ const EditSpot = () => {
   const [showDelete, setShowDelete] = useState(false);
   const [hosting, setHosting] = useState(false);
   const [images, setImages] = useState('')
-  console.log(images)
+  const [toBRemoved, setToBRemoved] = useState([])
+  console.log(toBRemoved)
   // const updateImage = async (e) => {
   //   const file = e.target.files[0];
   //   const reader = new FileReader();
@@ -48,13 +49,35 @@ const EditSpot = () => {
   useEffect(async () => {
     dispatch(fetchSpot(spotId));
     let images = spot?.images.map((image) => {
-      return { data_url: image }; 
+      return { 'data_url': image['url'], 'id': image['id'] }; 
     })
     setImages(images)
     if (spot) {
       setIsLoaded(true);
     }
   }, [dispatch]);
+
+  const addImages = async (images, spot_id) => {
+    for (let i = 0; i < toBRemoved.length; i++) {
+      await dispatch(removeImg(toBRemoved[i]))
+    }
+
+    for (let i = 0; i < images.length; i++) {
+      let image = images[i];
+
+      let newFile = false;
+      let file;
+
+      if (image.file) {
+        newFile = true;
+        file = image.file;
+      } else {
+        file = image.data_url;
+      }
+
+      await dispatch(uploadFile(file, spot_id));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,11 +94,13 @@ const EditSpot = () => {
     };
     const newSpot = await dispatch(updateSpot(spotId, spot));
     if (newSpot.id) {
-      if (newImgId !== oldImgId) {
-        const deleteImg = await dispatch(removeImg(oldImgId));
-        console.log('IN MIDDLE OF DELETE AND IMAGE UPLOAD')
-        const imageUpload = await dispatch(uploadFile(newImg, spotId));
-      }
+      // if (newImgId !== oldImgId) {
+      //   const deleteImg = await dispatch(removeImg(oldImgId));
+      //   console.log('IN MIDDLE OF DELETE AND IMAGE UPLOAD')
+      //   const imageUpload = await dispatch(uploadFile(newImg, spotId));
+      // }
+      await addImages(images, newSpot.id)
+      
       return history.push(`/spots/${spotId}`);
     } else {
       setErrors(newSpot);
@@ -149,13 +174,12 @@ const EditSpot = () => {
               >
                 Click or Drag Up To 5 Images Here
               </div>
-              {/* <div onClick={onImageRemoveAll}>Remove all images</div> */}
               {imageList.length >= 1 && (
                 <div className="images_container">
                   {imageList.map((image, index) => (
                     <div key={index}>
                       <img
-                        src={image["data_url"]}
+                        src={image['data_url']}
                         alt=""
                         className="previewImg"
                       />
@@ -168,7 +192,10 @@ const EditSpot = () => {
                         </div>
                         <div
                           className="remove_image"
-                          onClick={() => onImageRemove(index)}
+                          onClick={() => {
+                            onImageRemove(index)
+                            toBRemoved.push(image['id'])
+                          }}
                         >
                           Remove
                         </div>
@@ -180,7 +207,7 @@ const EditSpot = () => {
             </div>
           )}
         </ImageUploading>
-        <div>
+        {/* <div>
           <label>Image</label>
           <input
             type="file"
@@ -189,10 +216,10 @@ const EditSpot = () => {
             onChange={updateImage}
             className="imgInputBtn"
           ></input>
-        </div>
-        {previewUrl && (
+        </div> */}
+        {/* {previewUrl && (
           <img src={previewUrl} className="spotImgPreviewEdit"></img>
-        )}
+        )} */}
         <div className="labelInputContainer">
           <label>Address</label>
           <input

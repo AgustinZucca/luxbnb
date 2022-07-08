@@ -22,7 +22,7 @@ import DatePicker from "react-calendar";
 import "../css/calendar.css";
 import { createBooking } from "../../store/bookings";
 import { format, addDays, subDays } from "date-fns";
-
+import SimpleImageSlider from "react-simple-image-slider";
 
 const SingleSpot = () => {
   const history = useHistory();
@@ -40,7 +40,7 @@ const SingleSpot = () => {
   const [avgRating, setAvgRating] = useState(0);
   const [date, setDate] = useState(null);
   const [succBook, setSuccBook] = useState(false);
-
+  const [showImages, setShowImages] = useState(true);
 
   const ratingAvg = async () => {
     let total = 0;
@@ -55,7 +55,7 @@ const SingleSpot = () => {
 
   const handleBooking = (e) => {
     e.preventDefault();
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     const booking = {
       user_id: user.id,
       spot_id: spot.id,
@@ -70,7 +70,7 @@ const SingleSpot = () => {
 
   useEffect(async () => {
     await dispatch(fetchSpot(spotId));
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     setIsLoaded(true);
   }, [count]);
 
@@ -136,6 +136,10 @@ const SingleSpot = () => {
     return delt;
   };
 
+  const sliderImages = spot?.images.map((image) => {
+    return image.url;
+  });
+
   if (!isLoaded) {
     return (
       <div className="loadingPage">
@@ -149,11 +153,28 @@ const SingleSpot = () => {
 
   return (
     <>
+      {showImages && (
+        <>
+          <div className="imageSliderModalBkg"></div>
+          <div className="imageSliderModal">
+            <SimpleImageSlider
+              width={800}
+              height={600}
+              images={sliderImages}
+              showBullets={true}
+              showNavs={true}
+            />
+          </div>
+        </>
+      )}
       {succBook && (
         <div className="successfulBooking">
           <div className="bookingMsg">
             <h2>Successful Booking</h2>
-            <img src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif" className="redirectBookImg"></img>
+            <img
+              src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"
+              className="redirectBookImg"
+            ></img>
             <h3 className="redirectBook">Redirecting to your bookings</h3>
           </div>
         </div>
@@ -190,10 +211,44 @@ const SingleSpot = () => {
           </div>
         </div>
         <div className="spotPicturesContainer">
-          <img
-            className="spotPicture"
-            src={spot?.images[spot?.images.length - 1]?.url}
-          ></img>
+          {spot?.images.length === 1 && (
+            <img
+              className="spotPictureOne"
+              src={spot?.images[spot?.images.length - 1]?.url}
+            ></img>
+          )}
+          {spot?.images.length === 2 && (
+            <>
+              <img
+                className="spotPicture"
+                src={spot?.images[spot?.images.length - 1]?.url}
+              ></img>
+              <div className="spotPictureSideTwo">
+                <img
+                  src={spot?.images[spot?.images.length - 2]?.url}
+                  className="spotPictureSideTwoImg"
+                ></img>
+              </div>
+            </>
+          )}
+          {spot?.images.length === 3 && (
+            <>
+              <img
+                className="spotPicture"
+                src={spot?.images[spot?.images.length - 1]?.url}
+              ></img>
+              <div className="spotPictureSideThree">
+                <img
+                  src={spot?.images[spot?.images.length - 2]?.url}
+                  className="spotPictureSideThreeImg"
+                ></img>
+                <img
+                  src={spot?.images[spot?.images.length - 3]?.url}
+                  className="spotPictureSideThreeImg"
+                ></img>
+              </div>
+            </>
+          )}
         </div>
         <div className="lowerSpotPage">
           <div className="lowerLeftSpotPage">
