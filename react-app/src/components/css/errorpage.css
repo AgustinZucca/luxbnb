@@ -1,0 +1,10 @@
+.errorPage {
+    padding-top: 100px;
+    margin: 0px 20%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.oops {
+    font-size: 150px;
+}

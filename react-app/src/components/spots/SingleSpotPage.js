@@ -40,7 +40,7 @@ const SingleSpot = () => {
   const [avgRating, setAvgRating] = useState(0);
   const [date, setDate] = useState(null);
   const [succBook, setSuccBook] = useState(false);
-  const [showImages, setShowImages] = useState(true);
+  const [showImages, setShowImages] = useState(false);
 
   const ratingAvg = async () => {
     let total = 0;
@@ -136,7 +136,7 @@ const SingleSpot = () => {
     return delt;
   };
 
-  const sliderImages = spot?.images.map((image) => {
+  const sliderImages = spot?.images.slice(0).reverse().map((image) => {
     return image.url;
   });
 
@@ -154,18 +154,21 @@ const SingleSpot = () => {
   return (
     <>
       {showImages && (
-        <>
-          <div className="imageSliderModalBkg"></div>
-          <div className="imageSliderModal">
-            <SimpleImageSlider
-              width={800}
-              height={600}
-              images={sliderImages}
-              showBullets={true}
-              showNavs={true}
-            />
-          </div>
-        </>
+        <div className="imageSliderModal">
+          <div
+            className="imageSliderModalBkg"
+            onClick={() => setShowImages(false)}
+          ></div>
+          <SimpleImageSlider
+            width={800}
+            height={600}
+            images={sliderImages}
+            showBullets={true}
+            showNavs={true}
+            style={{zIndex: 520}}
+          />
+          {/* <div className="imageSliderModal"></div> */}
+        </div>
       )}
       {succBook && (
         <div className="successfulBooking">
@@ -222,11 +225,13 @@ const SingleSpot = () => {
               <img
                 className="spotPicture"
                 src={spot?.images[spot?.images.length - 1]?.url}
+                onClick={() => setShowImages(true)}
               ></img>
               <div className="spotPictureSideTwo">
                 <img
                   src={spot?.images[spot?.images.length - 2]?.url}
                   className="spotPictureSideTwoImg"
+                  onClick={() => setShowImages(true)}
                 ></img>
               </div>
             </>
@@ -236,15 +241,18 @@ const SingleSpot = () => {
               <img
                 className="spotPicture"
                 src={spot?.images[spot?.images.length - 1]?.url}
+                onClick={() => setShowImages(true)}
               ></img>
               <div className="spotPictureSideThree">
                 <img
                   src={spot?.images[spot?.images.length - 2]?.url}
                   className="spotPictureSideThreeImg"
+                  onClick={() => setShowImages(true)}
                 ></img>
                 <img
                   src={spot?.images[spot?.images.length - 3]?.url}
                   className="spotPictureSideThreeImg"
+                  onClick={() => setShowImages(true)}
                 ></img>
               </div>
             </>

@@ -20,14 +20,16 @@
 
 .spotPictureOne {
   width: 100%;
-  height: 90%;
+  height: 50%;
   object-fit: cover;
+  border-radius: 5px;
 }
 
 .spotPicture {
   width: 69%;
   height: 90%;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .spotPictureSideTwo {
@@ -38,6 +40,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  cursor: pointer;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -53,12 +56,13 @@
   width: 100%;
   height: 49%;
   object-fit: cover;
+  cursor: pointer;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
 .imageSliderModal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -66,13 +70,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 501;
 }
 
 .imageSliderModalBkg {
-  position:absolute;
+  position:fixed;
   top: 0;
   left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #7474749c;
+  z-index: 500;
 }
+
+.actualSlider {
+  z-index: 520;
+}
+
 
 .lowerSpotPage {
   margin-top: 20px;

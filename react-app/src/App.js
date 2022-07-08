@@ -15,6 +15,8 @@ import Feed from './components/Feed';
 import AboutMe from './components/Aboutme';
 import Footer from './components/Footer';
 import UserBookings from './components/UserBookings';
+import PageNotFound from './components/PageNotFound';
+
 
 
 function App() {
@@ -61,6 +63,7 @@ function App() {
         <Route path='/' exact={true} >
           <Feed />
         </Route>
+        <PageNotFound />
       </Switch>
     </BrowserRouter>
   );
