@@ -73,7 +73,7 @@ const NavBar = () => {
             <div>luxbnb</div>
           </div>
         </NavLink>
-        <div>Host your Luxury spot!</div>
+        <div>Host/Book a Luxury spot!</div>
         <div className="navbardropdown" onClick={openDropDown}>
           {menuIcon}
 
