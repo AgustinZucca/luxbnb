@@ -21,6 +21,7 @@ const UserBookings = () => {
 
   useEffect(async () => {
     dispatch(getUserBookings(user.id));
+    window.scrollTo(0, 0)
     setIsLoaded(true);
   }, [isLoaded]);
 

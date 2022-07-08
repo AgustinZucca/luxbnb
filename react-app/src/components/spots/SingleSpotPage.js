@@ -22,7 +22,7 @@ import DatePicker from "react-calendar";
 import "../css/calendar.css";
 import { createBooking } from "../../store/bookings";
 import { format, addDays, subDays } from "date-fns";
-
+import SimpleImageSlider from "react-simple-image-slider";
 
 const SingleSpot = () => {
   const history = useHistory();
@@ -40,7 +40,7 @@ const SingleSpot = () => {
   const [avgRating, setAvgRating] = useState(0);
   const [date, setDate] = useState(null);
   const [succBook, setSuccBook] = useState(false);
-
+  const [showImages, setShowImages] = useState(false);
 
   const ratingAvg = async () => {
     let total = 0;
@@ -55,7 +55,7 @@ const SingleSpot = () => {
 
   const handleBooking = (e) => {
     e.preventDefault();
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     const booking = {
       user_id: user.id,
       spot_id: spot.id,
@@ -70,7 +70,7 @@ const SingleSpot = () => {
 
   useEffect(async () => {
     await dispatch(fetchSpot(spotId));
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     setIsLoaded(true);
   }, [count]);
 
@@ -82,8 +82,8 @@ const SingleSpot = () => {
     history.push(`/spots/${spot?.id}/edit`);
   };
 
-  const blockedDates = [new Date(2022, 6, 8)];
-  console.log(new Date());
+  // const blockedDates = [new Date(2022, 6, 8)];
+  // console.log(new Date());
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -99,7 +99,6 @@ const SingleSpot = () => {
     };
     const newReview = await dispatch(createReview(fullReview));
     setCount(count + 1);
-    console.log(newReview);
     if (newReview.errors) {
       setReviewErr(true);
     } else {
@@ -122,7 +121,7 @@ const SingleSpot = () => {
     let oned = 24 * 60 * 60 * 1000;
     const days = Math.ceil((date2 - date1) / oned);
 
-    return days - 1;
+    return days;
   };
 
   const editReview = (review) => {
@@ -137,6 +136,10 @@ const SingleSpot = () => {
     return delt;
   };
 
+  const sliderImages = spot?.images.slice(0).reverse().map((image) => {
+    return image.url;
+  });
+
   if (!isLoaded) {
     return (
       <div className="loadingPage">
@@ -150,11 +153,31 @@ const SingleSpot = () => {
 
   return (
     <>
+      {showImages && (
+        <div className="imageSliderModal">
+          <div
+            className="imageSliderModalBkg"
+            onClick={() => setShowImages(false)}
+          ></div>
+          <SimpleImageSlider
+            width={800}
+            height={600}
+            images={sliderImages}
+            showBullets={true}
+            showNavs={true}
+            style={{zIndex: 520}}
+          />
+          {/* <div className="imageSliderModal"></div> */}
+        </div>
+      )}
       {succBook && (
         <div className="successfulBooking">
           <div className="bookingMsg">
             <h2>Successful Booking</h2>
-            <img src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif" className="redirectBookImg"></img>
+            <img
+              src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"
+              className="redirectBookImg"
+            ></img>
             <h3 className="redirectBook">Redirecting to your bookings</h3>
           </div>
         </div>
@@ -191,10 +214,49 @@ const SingleSpot = () => {
           </div>
         </div>
         <div className="spotPicturesContainer">
-          <img
-            className="spotPicture"
-            src={spot?.images[spot?.images.length - 1]?.url}
-          ></img>
+          {spot?.images.length === 1 && (
+            <img
+              className="spotPictureOne"
+              src={spot?.images[spot?.images.length - 1]?.url}
+            ></img>
+          )}
+          {spot?.images.length === 2 && (
+            <>
+              <img
+                className="spotPicture"
+                src={spot?.images[spot?.images.length - 1]?.url}
+                onClick={() => setShowImages(true)}
+              ></img>
+              <div className="spotPictureSideTwo">
+                <img
+                  src={spot?.images[spot?.images.length - 2]?.url}
+                  className="spotPictureSideTwoImg"
+                  onClick={() => setShowImages(true)}
+                ></img>
+              </div>
+            </>
+          )}
+          {spot?.images.length === 3 && (
+            <>
+              <img
+                className="spotPicture"
+                src={spot?.images[spot?.images.length - 1]?.url}
+                onClick={() => setShowImages(true)}
+              ></img>
+              <div className="spotPictureSideThree">
+                <img
+                  src={spot?.images[spot?.images.length - 2]?.url}
+                  className="spotPictureSideThreeImg"
+                  onClick={() => setShowImages(true)}
+                ></img>
+                <img
+                  src={spot?.images[spot?.images.length - 3]?.url}
+                  className="spotPictureSideThreeImg"
+                  onClick={() => setShowImages(true)}
+                ></img>
+              </div>
+            </>
+          )}
         </div>
         <div className="lowerSpotPage">
           <div className="lowerLeftSpotPage">
@@ -344,7 +406,6 @@ const SingleSpot = () => {
                   returnValue="range"
                   selectRange={true}
                   tileDisabled={({ date }) => date < new Date()}
-                  isValidDate={blockedDates}
                 />
                 {date ? (
                   <>
