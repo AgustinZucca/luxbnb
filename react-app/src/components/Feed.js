@@ -14,6 +14,7 @@ const Feed = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+
   
   useEffect(async () => {
     dispatch(fetchAllSpots()).then(() => setIsLoaded(true));
