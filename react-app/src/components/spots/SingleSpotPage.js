@@ -272,7 +272,7 @@ const SingleSpot = () => {
               </div>
               {spot?.description}
             </div>
-            <div>
+            <div className="offerings">
               <div>
                 <p style={{ fontSize: "20px" }}>What this place offers</p>
               </div>
