@@ -4,36 +4,6 @@ from app.models import db, Spot
 # Adds a demo user, you can add other users here if you want
 def seed_spots():
     spot1 = Spot(
-        user_id=1,
-        address='2456 Pecan Road',
-        city='Los Angeles',
-        state='California',
-        name='Beauty On the Hills',
-        description='Relax at this beautiful hosue on the hills of Los Angeles.',
-        beds='4',
-        baths='5',
-        price='5000')
-    spot2 = Spot(
-        user_id=2,
-        address='1469 Sunshine Ln',
-        city='Houston',
-        state='Texas',
-        name='Texan Palace',
-        description="An unparalleled offering, a showplace of the highest caliber, this fully automated smart home sits on nearly 4 acres of gated grounds in exclusive Southlake minutes from Lake Grapevine! It offers every amenity imaginable, palatial living spaces, wine room, grand dining, balcony w-panoramic views, impeccable Chef's Kit, executive study all w-exquisite finishes & details.",
-        beds='8',
-        baths='10',
-        price='12000')
-    spot3 = Spot(
-        user_id=3,
-        address='9881 SW 68th St',
-        city='Miami',
-        state='Florida',
-        name='Oasis in Miami',
-        description="Spectacular gated estate set on over an acre of lushly landscaped grounds. Elegant, modern-style home completed in 2018 w/the finest fixtures & finishes throughout including porcelain tile flooring & floating staircase w/glass railings. ",
-        beds='6',
-        baths='7',
-        price='5000')
-    spot4 = Spot(
         user_id=4,
         address='683 Ocean Rd',
         city='Southampton',
@@ -43,7 +13,7 @@ def seed_spots():
         beds='8',
         baths='9',
         price='25000')
-    spot5 = Spot(
+    spot2 = Spot(
         user_id=5,
         address='432 Newark Rd',
         city='Southampton',
@@ -53,7 +23,7 @@ def seed_spots():
         beds='8',
         baths='9',
         price='4500')
-    spot6 = Spot(
+    spot3 = Spot(
         user_id=6,
         address='900 Pebble Ln',
         city='Southampton',
@@ -63,17 +33,17 @@ def seed_spots():
         beds='7',
         baths='7',
         price='10000')
-    spot7 = Spot(
+    spot4 = Spot(
         user_id=1,
-        address='45 St',
+        address='240 Park Avenue South',
         city='New York',
         state='New York',
         name='Manhattan Penthouse',
-        description="Set atop a landmark condominium in Soho rests this exquisite Corner Penthouse Duplex Loft boasting 2,421 sq ft of impeccably renovated interiors and an enormous rooftop terrace.",
+        description="This “journey into bespoke craftsmanship” from master design studio’s of Matthew Hoey and Soren Rose encompasses the entire top floor, mezzanine and rooftop of the 240 Park Avenue South Condominium. A team of master craftsmen, designers and artisans were chosen to design, curate, mill, forge and build this breathtaking home over a six year period.",
         beds='2',
         baths='3',
         price='10000')
-    spot8 = Spot(
+    spot5 = Spot(
         user_id=2,
         address='6th St',
         city='New York',
@@ -83,7 +53,7 @@ def seed_spots():
         beds='3',
         baths='4',
         price='12000')
-    spot9 = Spot(
+    spot6 = Spot(
         user_id=3,
         address='1987 Stoney Rd',
         city='Chicago',
@@ -93,7 +63,7 @@ def seed_spots():
         beds='5',
         baths='5',
         price='6000')
-    spot10 = Spot(
+    spot7 = Spot(
         user_id=4,
         address='10333 Woodford Dr',
         city='Dallas',
@@ -103,7 +73,7 @@ def seed_spots():
         beds='3',
         baths='4',
         price='9000')
-    spot11 = Spot(
+    spot8 = Spot(
         user_id=5,
         address='55 Commercial Wharf #12',
         city='Boston',
@@ -113,7 +83,7 @@ def seed_spots():
         beds='3',
         baths='3',
         price='7000')
-    spot12 = Spot(
+    spot9 = Spot(
         user_id=6,
         address='2000 Washington, #7',
         city='San Francisco',
@@ -123,7 +93,7 @@ def seed_spots():
         beds='4',
         baths='5',
         price='9000')
-    spot13 = Spot(
+    spot10 = Spot(
         user_id=1,
         address='24301 Elise Ct',
         city='Los Altos Hills',
@@ -133,7 +103,7 @@ def seed_spots():
         beds='5',
         baths='5',
         price='9500')
-    spot14 = Spot(
+    spot11 = Spot(
         user_id=2,
         address='10560 Blandor Way',
         city='Los Altos Hills',
@@ -143,7 +113,7 @@ def seed_spots():
         beds='4',
         baths='5',
         price='9200')
-    spot15 = Spot(
+    spot12 = Spot(
         user_id=3,
         address='67 Beverly Park Court',
         city='Beverly Hills',
@@ -153,7 +123,7 @@ def seed_spots():
         beds='12',
         baths='14',
         price='15000')
-    spot16 = Spot(
+    spot13 = Spot(
         user_id=4,
         address='130 Palm Ave',
         city='Miami Beach',
@@ -163,7 +133,7 @@ def seed_spots():
         beds='11',
         baths='12',
         price='8000')
-    spot17 = Spot(
+    spot14 = Spot(
         user_id=5,
         address='1109 Calle Vista Drive',
         city='Beverly Hills',
@@ -173,7 +143,7 @@ def seed_spots():
         beds='6',
         baths='10',
         price='10800')
-    spot18 = Spot(
+    spot15 = Spot(
         user_id=6,
         address='54 East 64th Street',
         city='New York',
@@ -200,9 +170,6 @@ def seed_spots():
     db.session.add(spot13)
     db.session.add(spot14)
     db.session.add(spot15)
-    db.session.add(spot16)
-    db.session.add(spot17)
-    db.session.add(spot18)
 
     db.session.commit()
 
