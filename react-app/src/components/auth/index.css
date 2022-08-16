@@ -16,6 +16,18 @@
   animation: popup 0.3s;
 }
 
+.modalBkg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: hidden;
+  cursor:default;
+  background-color: rgba(0, 0, 0, 0.299);
+}
+
+
 @keyframes popup {
   0% {
     transform: scale(0);

@@ -20,8 +20,8 @@ import {
 } from "../Navicons";
 import DatePicker from "react-calendar";
 import "../css/calendar.css";
-import { createBooking } from "../../store/bookings";
-import { format, addDays, subDays } from "date-fns";
+import { createBooking, spotBookings } from "../../store/bookings";
+import { DateRange } from "react-date-range";
 import SimpleImageSlider from "react-simple-image-slider";
 
 const SingleSpot = () => {
@@ -29,6 +29,7 @@ const SingleSpot = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots.spot);
+  const currBookings = useSelector((state) => state.spots?.spot?.bookings);
   const { spotId } = useParams();
   const [rating, setRating] = useState(1);
   const [review, setReview] = useState("");
@@ -53,6 +54,20 @@ const SingleSpot = () => {
     setAvgRating(total / times);
   };
 
+  const disabledRanges = (currBookings) => {
+    let arr = [];
+    for (let i = 0; i < currBookings.length; i++) {}
+    return arr;
+  };
+
+  // function tileDisabled({ date, view }) {
+  //   // Add class to tiles in month view only
+  //   if (view === "month") {
+  //     // Check if a date React-Calendar wants to check is within any of the ranges
+  //     return isWithinInterval(date, disabledRanges);
+  //   }
+  // }
+
   const handleBooking = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
@@ -70,6 +85,7 @@ const SingleSpot = () => {
 
   useEffect(async () => {
     await dispatch(fetchSpot(spotId));
+    await dispatch(spotBookings(spotId));
     window.scrollTo(0, 0);
     setIsLoaded(true);
   }, [count]);
@@ -136,9 +152,12 @@ const SingleSpot = () => {
     return delt;
   };
 
-  const sliderImages = spot?.images.slice(0).reverse().map((image) => {
-    return image.url;
-  });
+  const sliderImages = spot?.images
+    .slice(0)
+    .reverse()
+    .map((image) => {
+      return image.url;
+    });
 
   if (!isLoaded) {
     return (
@@ -165,7 +184,7 @@ const SingleSpot = () => {
             images={sliderImages}
             showBullets={true}
             showNavs={true}
-            style={{zIndex: 520}}
+            style={{ zIndex: 520 }}
           />
           {/* <div className="imageSliderModal"></div> */}
         </div>
@@ -396,7 +415,7 @@ const SingleSpot = () => {
                 )}
               </div>
               <form onSubmit={handleBooking}>
-                <DatePicker
+                {/* <DatePicker
                   onChange={(picked) => setDate(picked)}
                   value={date}
                   view={"month"}
@@ -405,8 +424,9 @@ const SingleSpot = () => {
                   next2Label={null}
                   returnValue="range"
                   selectRange={true}
-                  tileDisabled={({ date }) => date < new Date()}
-                />
+                  // tileDisabled={tileDisabled}
+                /> */}
+                <DateRange minDate={new Date()} editableDateInputs={true} />
                 {date ? (
                   <>
                     <div className="total">

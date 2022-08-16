@@ -16,6 +16,13 @@ def user_bookings(userId):
     res = [booking.to_dict() for booking in bookings]
     return {"bookings": res}
 
+@booking_routes.route("/<int:spotId>")
+@login_required
+def spot_bookings(spotId):
+    bookings = Booking.query.filter(Booking.spot_id == spotId).all()
+    res = [booking.to_dict() for booking in bookings]
+    return {"bookings": res}
+
 
 # Create a booking
 @booking_routes.route("/new", methods=["POST"])

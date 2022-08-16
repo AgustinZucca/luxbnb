@@ -1,5 +1,6 @@
 const CREATE_BOOKING = "bookings/CREATE_BOOKING";
 const GET_BOOKINGS = "bookings/GET_BOOKINGS";
+const SPOT_BOOKINGS = "bookings/SPOT_BOOKINGS";
 const DELETE_BOOKING = "bookings/DELETE_BOOKING";
 
 const newBooking = (booking) => ({
@@ -17,31 +18,37 @@ const getBookings = (bookings) => ({
     payload: bookings
 })
 
+const getSpotBookings = (bookings) => ({
+    type: SPOT_BOOKINGS,
+    payload: bookings
+})
+
+
 export const deleteBooking = (bookingId) => async (dispatch) => {
-    const response = await fetch(`/api/bookings/${bookingId}`, {
-        method: 'DELETE',
-        headers: {
-            "Content-Type": "application/json",
-          }
-    })
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(getBookings(data));
-        return data;
-      } else {
-        return ["An error occurred. Please try again."];
-      }
+  const response = await fetch(`/api/bookings/${bookingId}`, {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getBookings(data));
+    return data;
+  } else {
+    return ["An error occurred. Please try again."];
+  }
 }
 
 export const getUserBookings = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/bookings/${userId}`)
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(getBookings(data));
-        return data;
-      } else {
-        return ["An error occurred. Please try again."];
-      }
+  const response = await fetch(`/api/bookings/${userId}`)
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getBookings(data));
+    return data;
+  } else {
+    return ["An error occurred. Please try again."];
+  }
 }
 
 export const createBooking = (booking) => async (dispatch) => {
@@ -52,7 +59,7 @@ export const createBooking = (booking) => async (dispatch) => {
     },
     body: JSON.stringify(booking),
   });
-
+  
   if (response.ok) {
     const data = await response.json();
     dispatch(newBooking(data));
@@ -67,11 +74,26 @@ export const createBooking = (booking) => async (dispatch) => {
   }
 };
 
+export const spotBookings = (spotId) => async (dispatch) => {
+  const response = await fetch(`/api/bookings/${spotId}`)
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getSpotBookings(data));
+    return data;
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+}
+
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case GET_BOOKINGS:
+      return action.payload
+      case SPOT_BOOKINGS:
         return action.payload
-    default:
-      return state;
-  }
-}
+        default:
+          return state;
+        }
+      }
+      

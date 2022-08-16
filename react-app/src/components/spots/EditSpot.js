@@ -184,12 +184,12 @@ const EditSpot = () => {
                         className="previewImg"
                       />
                       <div className="editPhotoButtons">
-                        <div
+                        {/* <div
                           className="change_image"
                           onClick={() => onImageUpdate(index)}
                         >
                           Change
-                        </div>
+                        </div> */}
                         <div
                           className="remove_image"
                           onClick={() => {
